@@ -1,17 +1,59 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plataforma software de gestión</title>
 </head>
+
 <body>
-    <nav>
-        <ul>
-            <li><a href="productos.html">Productos</a></li>
-            <li><a href="estrategias.html">Estrategias gestión almacen</a></li>
-        </ul>
-    </nav>
-    <h1>Plataforma software de gestión</h1>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="estrategias.html">Estrategias gestión almacen</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Plataforma software de gestión</h1>
+        <h4>Control de existencias y manejo de inventarios para empresas
+        </h4>
+        <a href="#pedir">Pedir</a>
+        <a href="#recibir">Recibir</a>
+        <a href="#administrar">Administrars</a>
+
+        <h5>Solicita tu software de Demo</h5>
+        <form>
+            <label for="name">Nombre de la empresa:</label>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="ciudad">Ciudad:</label>
+            <input list="ciudades" id="ciudad" name="ciudad" required>
+            <datalist id="ciudades">
+                <option value="Madrid">
+                <option value="Barcelona">
+                <option value="Valencia">
+                <option value="Sevilla">
+                <option value="Bilbao">
+            </datalist><br><br>
+
+            <label for="tam">Tamaño de la Empresa:</label>
+            <select id="tam" name="size">
+                <option value="peq">Pequeña (1-10 empleados)</option>
+                <option value="mediano">Mediana (11-50 empleados)</option>
+                <option value="grande">Grande (51+ empleados)</option>
+            </select><br><br>
+            <input type="submit" value="Solicitar Demo">
+
+        </form>
+        <hr>
+
+    </main>
 </body>
+
 </html>
