@@ -24,14 +24,16 @@
         <a href="#recibir">Recibir</a>
         <a href="#administrar">Administrars</a>
 
-        <h5><mark>solicita tu software de Demo </mark></h5>
+        <h5><mark>Solicita tu software de Demo </mark></h5>
         <form>
-            <label for="name">Nombre de la empresa:</label>
-            <input type="text" id="name" name="name" required><br><br>
-
-            <label for="email">Correo Electr&oacute;nico:</label>
-            <input type="email" id="email" name="email" required><br><br>
-
+            <section class="name-empresa">
+                <label for="name">Nombre de la empresa:</label>
+                <input type="text" id="name" name="name" required><br><br>
+            </section>
+            <section class="email.empresa">
+                <label for="email">Correo Electr&oacute;nico:</label>
+                <input type="email" id="email" name="email" required><br><br>
+            </section <section class="ciudad-empresa">
             <label for="ciudad">Ciudad:</label>
             <input list="ciudades" id="ciudad" name="ciudad" required>
             <datalist id="ciudades">
@@ -41,17 +43,36 @@
                 <option value="Sevilla">
                 <option value="Bilbao">
             </datalist><br><br>
+            </section>
 
-            <label for="tam">Tamaño de la Empresa:</label>
-            <select id="tam" name="size">
-                <option value="peq">Pequeña (1-10 empleados)</option>
-                <option value="mediano">Mediana (11-50 empleados)</option>
-                <option value="grande">Grande (51+ empleados)</option>
-            </select><br><br>
-            <label for="fuel">Estable:</label>
-            <meter min="0" max="100" id="fuel" value="95"></meter> <br><br>
+            <section class="tam-empresa">
+                <label for="tam">Tamaño de la Empresa:</label>
+                <select id="tam" name="size">
+                    <option value="peq">Peque&ntilde;a (1-10 empleados)</option>
+                    <option value="mediano">Mediana (11-50 empleados)</option>
+                    <option value="grande">Grande (51+ empleados)</option>
+                </select><br><br>
+            </section>
+
+            <section class="estabilidad-software">
+                <label for="fuel">Estabilidad:</label>
+                <meter min="0" max="100" id="fuel" value="95"></meter> <br><br>
+            </section> 
+
+            <section class="informacion">
+            <label for="otros">Informaci&oacute;n adicional:</label><br>
+            <textarea id="otros" name="otros" rows="4" cols="30"></textarea><br><br>
+            </section>
+
+            <section class="legal">
+                <input type="checkbox" name="legal" id="aceptar" value="aceptar" required>
+                <label for="aceptar">Acepto las condiciones legales</label>
+            </section>
+            <br>
+
+            <section class="enviar">
             <input type="submit" value="Solicitar Demo">
-
+            </section>
 
         </form>
         <hr>
