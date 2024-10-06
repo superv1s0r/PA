@@ -1,0 +1,49 @@
+Ejercicio 5: Incluya un fichero leeme.txt junto a la entrega de la práctica que indique dónde se han usado las etiquetas
+de HTML5 y con qué objetivo.
+
+
+Los archivos HTML que conforman este proyecto siguen entre sí una estructura muy similar. A continuación detallo las etiquetas de HTML5 que se han usado.
+
+
+<!DOCTYPE html>: Se usa al inicio del documento para definir el tipo de documento como HTML5. Sirve para que los navegadores interpreten correctamente la página y apliquen las especificaciones de este estándar.
+
+<html lang="es">: Define el idioma principal del contenido de la página como español. Esto ayuda a los motores de búsqueda y lectores de pantalla a entender el idioma en que se presenta el contenido.
+
+<head>: Contiene metadatos de la página, como el conjunto de caracteres (charset) y el título (<title>), además de la referencia al archivo CSS (<link>).
+
+<meta charset="UTF-8">: Especifica el conjunto de caracteres utilizados, en este caso UTF-8, para soportar todos los caracteres y símbolos utilizados en el idioma español.
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">: Establece la escala inicial para dispositivos móviles y asegura que la página se vea bien en distintas resoluciones.
+
+<title>: Define el título de la página que se muestra en la pestaña del navegador y en resultados de búsqueda.
+
+<link rel="stylesheet" href="styles.css">: Incluye la hoja de estilos CSS para darle diseño y formato a la página.
+
+<body>: Contiene la estructura de la página web. Dentro de esta etiqueta empezaremos a crear el contenido visual de la misma.
+
+<header>: Agrupa el encabezado de la página, como los títulos de las noticias, su autor y la fecha de publicación.
+
+<h1, h2, h3...>: Encabezados de la página, que resaltan títulos a una fuente de mayor tamaño que el resto del texto.
+
+<p>: Usado para representar todo tipo de texto en forma de párrafo.
+
+<nav>: Contiene el menú de navegación de la página entre distintas secciones del sitio web.
+
+<ul> y <li>: Se usa para listar los diferentes enlaces de la navegación, según queramos que esta lista sea ordenada o no.
+
+<main>: Define la parte principal del contenido, y agrupa el artículo y las secciones relacionadas.
+
+<article>: Contienen el cuerpo de, por ejemplo, las noticias. Se utiliza para agrupar independientemente información relevante para el usuario.
+
+<section>: Agrupa distintas secciones dentro del artículo, como la clasificación de tipos de almacenes y sus descripciones. Se ha utilizado para dividir el contenido en bloques con un tema común.
+
+<strong>: Resalta el texto de dentro, en este caso lo hemos usado para las listas.
+
+<figure>: Especifica contenido como imágenes, diagramas, ilustraciones...
+
+<figcaption>: Proporciona una descripción de la imagen que se muestra.
+
+<img>: Se utiliza para mostrar imágenes. Contiene el atributo alt, que se emplea para dar una descripción de la imagen útil para cuando esta no condiga cargar o para personas con discapacidad visual.
+
+<footer>: Encierra el pie de página con información relevante. Se ha usado para presentar información legal sobre los derechos de la web.
+
