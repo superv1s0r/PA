@@ -47,3 +47,34 @@ Los archivos HTML que conforman este proyecto siguen entre sí una estructura mu
 
 <footer>: Encierra el pie de página con información relevante. Se ha usado para presentar información legal sobre los derechos de la web.
 
+<option>: Se utiliza dentro de una etiqueta <select> para definir las opciones que un usuario puede seleccionar en un menú desplegable.
+
+<label>: Asocia un texto con un elemento de formulario, como un <input> o <select>
+
+<br>: Se ha usado para incluir saltos de línea en textos.
+
+<select>: Se ha usado para crear un menú desplegable con opciones.
+
+<a>: Crea enlaces que hemos usado para la navegación entre páginas.
+
+<hr>: Crea una línea horizontal que separa contenido en la página.
+
+<video>: Se ha usado para insertar vídeos en la página.
+
+<summary>: Se usa junto con <details> para crear un resumen para el contenido desplegable.
+
+<details>: Define un bloque de contenido que se puede expandir o contraer.
+
+<math>: Permite insertar fórmulas y expresiones matemáticas en la página.
+
+<hgroup>: Agrupa un conjunto de elementos de encabezado (<h1>, <h2>, etc.) bajo un mismo contexto.
+
+<mark>: Sirve para resaltar un determinado texto en la web.
+
+<datalist>: Proporciona una lista de opciones predefinidas para un <input>.
+
+<input>: Crea un campo de entrada para que el usuario proporcione datos como texto, contraseñas, números...
+
+<form>: Agrupa un conjunto de elementos de entrada en un formulario que luego se pueden enviar al servidor.
+
+<meter>: Representa un valor dentro de un rango predefinido, como una barra de progreso.
