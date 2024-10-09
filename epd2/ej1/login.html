@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
         *{
             margin: 0;
@@ -22,10 +23,13 @@
             background: linear-gradient(to right, #e2e2e2, #c9d6ff);
         }
 
-
+        h1{
+            margin-top: 10px;
+            text-align: center;
+        }
         .space1 {
 
-            width: 40%;
+            width: 39%;
             float: left;
             height: 100px;
 
@@ -35,13 +39,12 @@
         .space2 {
 
             height: 100px;
-            width: 40%;
+            width: 39%;
             float: left;
 
         }
         .login-container {
-            margin-top: 100px;
-
+            margin-top: 120px;
             background-color: #fff;
             float: left;
             border-radius: 25px;
@@ -53,13 +56,15 @@
             max-width: 100%;
         }
 
-        .login-container span{
-             
-            font-size: 12px;
-            margin-left: 15px;
-            
+        .login-container span {
+            font-size: 15px;
+            display: block;
+            text-align: center;
+            width: 100%;
+            margin-top: 10px;
         }
 
+    
         .login-container a{
 
             color: #333;
@@ -103,14 +108,15 @@
 
         }
 
-        .icons-account{
-
-            margin:20px 0;
-         
-
+        .icons-account {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;     
+            
         }
-
         .icons-account a{
+            
             border: 1px solid #ccc;
             border-radius: 20%;
             display: inline-flex;
@@ -145,9 +151,11 @@
                 <a href="#" class="icons"><i class="fa-brands fa-google-plus-g"></i></a>
                 <a href="#" class="icons"><i class="fa-brands fa-facebook-f"></i></a>
                 <a href="#" class="icons"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="icons"><i class="fa-brands fa-apple"></i></a>
+
             </div>
 
-            <span>Or use your account</span>
+            <span>O usa una cuenta ya existente</span>
             <form>
                 <input type="text" id="username" name="username" placeholder="username" required>
                 <input type="password" id="passwd" name="passwd" placeholder="password" required>
