@@ -1,9 +1,14 @@
-@import "https://fonts.google.com/specimen/Montserrat";
-
-*{
+* {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+}
+
+.montserrat {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
 }
 
 body {
@@ -40,7 +45,7 @@ nav a {
     white-space: nowrap;
 }
 
-nav .animation{
+nav .animation {
     position: absolute;
     height: 5px;
     bottom: 0;
@@ -51,8 +56,24 @@ nav .animation{
     transition: all .5s ease 0s;
 }
 
-nav a:hover{
+nav a:hover {
     border-bottom: 2px solid white;
 }
 
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        height: auto;
+    }
 
+    nav a {
+        padding: 10px 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    nav .animation {
+        display: none;
+    }
+}
