@@ -1,0 +1,20 @@
+body {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    box-sizing: border-box;
+}
+
+nav {
+    grid-column: 1;
+    padding: 15px;
+    border-radius: 5px;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+    margin: 2rem;
+    height: auto;
+}
+
+main {
+    grid-column: 2;
+}
