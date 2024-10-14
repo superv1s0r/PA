@@ -1,0 +1,6 @@
+.columnas {
+    display: grid;
+    grid-column: 3;
+    grid-template-columns: auto 50% auto;
+    gap: 10px;
+}

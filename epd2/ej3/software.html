@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma software de gesti&oacute;n</title>
+
+    <link id="estilo" rel="stylesheet" href="./3columnasGrid.css">
+</head>
+<style>
+        .border {
+            border: 2px solid black;
+            padding: 2px;
+            margin: 25px;
+        }
+        
+</style>
+<body>
+    <div class="columnas">
+        <header class="columna1 border">
+            <nav>
+                <ul>
+                    <li><a href="productos.html">Productos</a></li>
+                    <li><a href="estrategias.html">Estrategias gesti&oacute;n almacen</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main class="columna2 border">
+            <hgroup>
+
+                <h1>Plataforma software de gesti&oacute;n</h1>
+                <h4>Control de existencias y manejo de inventarios para empresas</h4>
+
+            </hgroup>
+            <a href="#pedir">Pedir</a>
+            <a href="#recibir">Recibir</a>
+            <a href="#administrar">Administrar</a>
+
+            <h5><mark>Solicita tu software de Demo </mark></h5>
+            <form>
+                <section class="name-empresa">
+                    <label for="name">Nombre de la empresa:</label>
+                    <input type="text" id="name" name="name" required><br><br>
+                </section>
+                <section class="email.empresa">
+                    <label for="email">Correo Electr&oacute;nico:</label>
+                    <input type="email" id="email" name="email" required><br><br>
+                </section>
+
+                <section class="ciudad-empresa">
+                    <label for="ciudad">Ciudad:</label>
+                    <input list="ciudades" id="ciudad" name="ciudad" required>
+                    <datalist id="ciudades">
+                        <option value="Madrid">
+                        <option value="Barcelona">
+                        <option value="Valencia">
+                        <option value="Sevilla">
+                        <option value="Bilbao">
+                    </datalist><br><br>
+                </section>
+
+                <section class="tam-empresa">
+                    <label for="tam">Tamaño de la Empresa:</label>
+                    <select id="tam" name="size">
+                        <option value="peq">Peque&ntilde;a (1-10 empleados)</option>
+                        <option value="mediano">Mediana (11-50 empleados)</option>
+                        <option value="grande">Grande (51+ empleados)</option>
+                    </select><br><br>
+                </section>
+
+                <section class="estabilidad-software">
+                    <label for="fuel">Estabilidad:</label>
+                    <meter min="0" max="100" id="fuel" value="95"></meter> <br><br>
+                </section>
+
+                <section class="informacion">
+                    <label for="otros">Informaci&oacute;n adicional:</label><br>
+                    <textarea id="otros" name="otros" rows="4" cols="30"></textarea><br><br>
+                </section>
+
+                <section class="legal">
+                    <input type="checkbox" name="legal" id="aceptar" value="aceptar" required>
+                    <label for="aceptar">Acepto las condiciones legales</label>
+                </section>
+                <br>
+
+                <section class="enviar">
+                    <input type="submit" value="Solicitar Demo">
+                </section>
+
+            </form>
+            <hr>
+
+        </main>
+    
+        <div class="columna3 border">
+            <!-- Información extra y los enlaces -->
+            <ul> 
+                <a href="blog.html">Página principal del blog</a>
+                <p>Averigua las Tendencias en Logistica 2024!</p>
+            </ul>
+
+            <ul>
+                <a href="noticia1.html">Noticia 1</a>
+                <p>Descubre tipos de almacén y su características</p>
+            </ul>        
+            
+            <ul>
+                <a href="noticia2.html">Noticia 2</a>
+                <p>Control del pesaje en el almacén</p>
+            </ul>
+
+            <ul>
+                <a href="noticia3.html">Noticia 3</a>
+                <p>Expansión internacional en Sudamérica</p>
+            </ul>
+        </div> 
+
+    </div>
+    <footer>
+        <p>&copy; 2024 Almacén de Productos. Todos los derechos reservados.</p>
+        <p>almacenepd1@gmail.com</p>
+    </footer>
+</body>
+
+</html>
