@@ -57,3 +57,5 @@ The attributes that we used are:
 - animation-duration: sets the duration of an animation
 - overflow-x: Controls the behaviour of content that exceeds the horizontal limits of an element 
 - overflow-y: Controls the behaviour of content that exceeds the vertical limits of an element
+- min-width: Controls the minimum width of the page.
+- min-height: Controls the minimum height of the page.
