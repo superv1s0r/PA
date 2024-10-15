@@ -13,6 +13,8 @@
 
 body {
     font-family: 'Open Sans', sans-serif;
+    overflow-x:auto;
+    overflow-y: auto;
 }
 
 nav {
@@ -78,12 +80,17 @@ nav a:hover {
     }
 }
 
+.imagenIni{
+    align-self:center;
+    align-content: center;
+}
+
 footer{
     position: relative;
     margin: 20px auto 0;
     width: 100%;
     height: 100px;
-    background: lightslategray;
+    background-color: lightslategray;
 }
 .social-media {
     border-radius: 8px;
@@ -113,6 +120,8 @@ footer{
 
 .social-media .facebook a:hover {
     border: 2px solid blue;
+    animation:forwards;
+    animation-duration: 3ms;
 }
 
 .social-media .twitter a:hover {
@@ -120,11 +129,15 @@ footer{
     border-left: 2px solid black;
     border-top: 2px solid white;
     border-right: 2px solid white;
+    animation: infinite;
+    animation-duration: 3ms;
 }
 
 .social-media .instagram a:hover {
     border: 2px solid;
     border-image: linear-gradient(to right, #515bd4, #8134af, #dd2a7b, #feda77, #f58529) 1;
+    animation:normal;
+    animation-duration: 3ms;
 }
 
 .social-media .email a:hover {
@@ -132,6 +145,8 @@ footer{
     border-left: 2px solid cornflowerblue;
     border-top: 2px solid red;
     border-right: 2px solid gold;
+    animation:both;
+    animation-duration: 3ms;
 }
 
 /* Media query for smaller screens */
@@ -156,4 +171,6 @@ footer{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    transform: scale();
+    visibility: visible;
 }

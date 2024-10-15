@@ -13,6 +13,8 @@
 
 body {
     font-family: 'Open Sans', sans-serif;
+    overflow-x:auto;
+    overflow-y: auto;
 }
 
 nav {
@@ -77,3 +79,8 @@ nav a:hover {
         display: none;
     }
 }
+
+.imagenIni{
+        align-self:center;
+        align-content: center;
+    }
