@@ -1,0 +1,59 @@
+We have created 6 archivos that are: 
+ 3columnasFlexbox.css
+ 3columnasFloat.css
+ 3columnasGrid.css
+ menuFooter.css
+ menuHead.css
+ stylesPadre.css
+
+
+
+The attributes that we used are:
+- align-items: Defines how items are aligned along the cross axis in a flexbox container
+- background: Sets all background properties in one declaration 
+- border: Sets the border width, style, and color in one declaration
+- border-bottom: Defines the width, style, and color of the bottom border of an element
+- border-color: Sets the color of the four borders of an element
+- border-image: Sets an image as the border for an element
+- border-left: Defines the width, style, and color of the left border of an element
+- border-radius: Specifies the radius of the element's corners, creating rounded edges
+- border-right: Defines the width, style, and color of the right border of an element
+- border-style: Specifies the style of the element's borders 
+- border-top: Defines the width, style, and color of the top border of an element
+- border-width: Sets the width of the four borders of an element
+- box-shadow: Applies shadow effects around an element's frame
+- box-sizing: Determines how the total width and height of an element are calculated
+- color: Sets the color of text for an element
+- display: Specifies the display behavior of an element 
+- flex-direction: Establishes the direction in which flexbox container items are placed in the flex container
+- flex-wrap: Controls whether the flex container items should wrap or not
+- font-family: Specifies the font family for text
+- font-optical-sizing: Controls the optical sizing of the font when applicable
+- font-size: Sets the size of the text
+- font-style: Defines whether the font should be italic or normal
+- font-weight: Specifies the thickness of the text 
+- gap: Specifies the gap between rows and columns in grid or flex containers
+- grid-column: Specifies which column an element should be placed in within a grid container
+- grid-template-columns: Defines the column structure of a grid container
+- height: Specifies the height of an element
+- justify-content: Aligns flex items along the main axis of the container
+- line-height: Sets the space between lines of text
+- margin: Specifies the space around an element's outside border
+- max-width: Sets the maximum width an element can have
+- overflow: Controls what happens to content that overflows the element's box 
+- padding: Specifies the space between the content and the border of an element
+- position: Specifies how an element is positioned on the page 
+- text-align: Sets the horizontal alignment of text within an element
+- text-decoration: Defines the decoration of text
+- text-transform: Controls the capitalization of text 
+- transition: Specifies the duration and timing function of a CSS property change 
+- white-space: Controls how white space inside an element is handled
+- width: Specifies the width of an element
+- z-index: Defines the stacking order of elements along the z-axis 
+- background-colour: sets the background colour of an element
+- transform: Applies graphical transformations to an element, such as rotation, scaling or translation
+- visibility: Controls the visibility of an element, making it visible, hidden or collapsed 
+- animation: defines an animation to be applied to an element, specifying keyframes or styles to be animated
+- animation-duration: sets the duration of an animation
+- overflow-x: Controls the behaviour of content that exceeds the horizontal limits of an element 
+- overflow-y: Controls the behaviour of content that exceeds the vertical limits of an element
