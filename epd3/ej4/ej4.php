@@ -1,3 +1,5 @@
+<a href="ej4.html">Átras</a>
+<br>
 <?php
 $almacen = [
     1 => [
@@ -24,6 +26,9 @@ $almacen = [
 ];
 
 $sku_recibido = $_GET['SKU'];
+$sku_recibido = strtoupper($sku_recibido);
+
+$matches = 0;
 
 foreach ($almacen as $pasillo => $estantes) {
     foreach ($estantes as $estante => $productos) {
@@ -32,14 +37,16 @@ foreach ($almacen as $pasillo => $estantes) {
 
             if ($producto['SKU'] == $sku_recibido) {
                 $cantidad_aux += $producto['Cantidad'];
+                $matches += 1;    
+
             }
         }
         if($cantidad_aux > 0)
-        echo "Pasillo $pasillo - Estante $estante - $cantidad_aux unidades </br>";
-
-
+            echo "Pasillo $pasillo - Estante $estante - $cantidad_aux unidades </br>";
+        
     }
 }
-
+    if($matches == 0)
+        echo "No se ha encontrado ningun articulo relacionado con " . $sku_recibido;
 ?>
 
