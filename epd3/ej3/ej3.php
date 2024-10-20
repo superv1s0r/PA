@@ -26,10 +26,11 @@
 
         if (!isset($productos[$sku])) {
             $productos[$sku] = [
+                'sku' => $sku,
                 'descripcion' => $descripcion,
                 'primera_fecha' => $fecha,
                 'ultima_fecha' => $fecha,
-                'unidades' => $unidades
+                'unidades' => (int)$unidades
             ];
         } else {
             $productos[$sku]['ultima_fecha'] = $fecha;
@@ -38,7 +39,7 @@
     }
 
     usort($productos, function ($a, $b) {
-        return strtotime($b['ultima_fecha']) <=> strtotime($a['primera_fecha']);
+        return strtotime($b['ultima_fecha']) <=> strtotime($a['ultima_fecha']);
     });
 
     echo "<table border='1'>
@@ -52,15 +53,16 @@
         </tr>";
 
     foreach ($productos as $sku => $producto) {
-        $primera_fecha = $producto['primera_fecha'];
-        $ultima_fecha = $producto['ultima_fecha'];
-        $dias_transcurridos = (strtotime($ultima_fecha) - strtotime($primera_fecha)) / (60 * 60 * 24);
+        $primera_fecha = date_create_from_format('d/m/Y', $producto['primera_fecha']);
+        $ultima_fecha = date_create_from_format('d/m/Y', $producto['ultima_fecha']);
+        $interval = $primera_fecha->diff($ultima_fecha);
+        $dias_transcurridos = $interval->days;
 
         echo "<tr>
-                    <td>$sku</td>
+                    <td>{$producto['sku']}</td>
                     <td>{$producto['descripcion']}</td>
-                    <td>$primera_fecha</td>
-                    <td>$ultima_fecha</td>
+                    <td>{$primera_fecha->format('d/m/Y')}</td>
+                    <td>{$ultima_fecha->format('d/m/Y')}</td>
                     <td>{$producto['unidades']}</td>
                     <td>$dias_transcurridos días</td>
                   </tr>";
