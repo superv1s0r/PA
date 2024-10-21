@@ -1,4 +1,4 @@
-<?php 
+<?php
 $almacen = [
     1 => [
         'a' => [
@@ -23,7 +23,39 @@ $almacen = [
     ]
 ];
 
+function buscar_segunSKU($almacen){
+
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['SKU'])) {
+
+        $sku_recibido = $_GET['SKU'];
+        $sku_recibido = strtoupper($sku_recibido);
+        $matches = 0;
+
+        foreach ($almacen as $pasillo => $estantes) {
+            foreach ($estantes as $estante => $productos) {
+                $cantidad_aux = 0;
+                foreach ($productos as $producto) {
+
+                    if ($producto['SKU'] == $sku_recibido) {
+                        $cantidad_aux += $producto['Cantidad'];
+                        $matches += 1;
+
+                    }
+                }
+                if($cantidad_aux > 0)
+                    echo "Pasillo $pasillo - Estante $estante - $cantidad_aux unidades </br>";
+
+            }
+        }
+        if( $matches == 0){
+            echo "No se ha encontrado ningun articulo relacionado con " . $sku_recibido;
+        }
+    }
+}
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,37 +74,10 @@ $almacen = [
         <input type="submit" value="Submit">
 
     </form>
+    <?php
+    buscar_segunSKU($almacen);
+    ?>
 <br>
-<?php
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['SKU'])) {
-
-    $sku_recibido = $_GET['SKU'];
-    $sku_recibido = strtoupper($sku_recibido); 
-    $matches = 0;
-    
-    foreach ($almacen as $pasillo => $estantes) {
-        foreach ($estantes as $estante => $productos) {
-            $cantidad_aux = 0;
-            foreach ($productos as $producto) {
-    
-                if ($producto['SKU'] == $sku_recibido) {
-                    $cantidad_aux += $producto['Cantidad'];
-                    $matches += 1;    
-    
-                }
-            }
-            if($cantidad_aux > 0)
-                echo "Pasillo $pasillo - Estante $estante - $cantidad_aux unidades </br>";
-            
-        }
-    }
-        if( $matches == 0){
-            echo "No se ha encontrado ningun articulo relacionado con " . $sku_recibido;
-        }
-}
-
-?>
 </body>
 </html>
-
 
