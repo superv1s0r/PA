@@ -1,4 +1,30 @@
-<?php 
+<?php
+function buscarProductoPorSKU(array $almacen, string $sku_recibido): void{
+    $sku_recibido = strtoupper($sku_recibido); 
+    $matches = 0;
+    
+    foreach ($almacen as $pasillo => $estantes) {
+        foreach ($estantes as $estante => $productos) {
+            $cantidad_aux = 0;
+            foreach ($productos as $producto) {
+    
+                if ($producto['SKU'] == $sku_recibido) {
+                    $cantidad_aux += $producto['Cantidad'];
+                    $matches += 1;    
+    
+                }
+            }
+            if($cantidad_aux > 0)
+                echo "Pasillo $pasillo - Estante $estante - $cantidad_aux unidades </br>";
+            
+        }
+    }
+        if( $matches == 0){
+            echo "No se ha encontrado ningun articulo relacionado con " . $sku_recibido;
+        }
+
+}
+
 $almacen = [
     1 => [
         'a' => [
@@ -45,30 +71,8 @@ $almacen = [
 <br>
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['SKU'])) {
-
     $sku_recibido = $_GET['SKU'];
-    $sku_recibido = strtoupper($sku_recibido); 
-    $matches = 0;
-    
-    foreach ($almacen as $pasillo => $estantes) {
-        foreach ($estantes as $estante => $productos) {
-            $cantidad_aux = 0;
-            foreach ($productos as $producto) {
-    
-                if ($producto['SKU'] == $sku_recibido) {
-                    $cantidad_aux += $producto['Cantidad'];
-                    $matches += 1;    
-    
-                }
-            }
-            if($cantidad_aux > 0)
-                echo "Pasillo $pasillo - Estante $estante - $cantidad_aux unidades </br>";
-            
-        }
-    }
-        if( $matches == 0){
-            echo "No se ha encontrado ningun articulo relacionado con " . $sku_recibido;
-        }
+    buscarProductoPorSKU($almacen, $sku_recibido);
 }
 
 ?>
