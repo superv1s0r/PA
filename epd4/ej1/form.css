@@ -1,0 +1,10 @@
+
+.campo-invalido{
+    border: 2px solid red;
+    background-color: white;
+}
+
+.error-mensaje{
+    color: red;
+    font-size: 0.9em;
+}
