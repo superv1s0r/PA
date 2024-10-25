@@ -23,8 +23,17 @@ function tratar_Error(&$errores)
         }
         if(!empty($_POST['fecha_llamada']) && (date('Y-m-d') > $_POST['fecha_llamada'])) {
 
-            $errores[] = 'La fecha llamada es mayor que la fecha actual';
+            $errores[] = 'La fecha de recepci&oacute;n de la llamada es menor que la fecha actual';
 
+        }
+        if (!empty($_POST['fecha_llamada'])) {
+            $fecha_comprobar = explode('-', $_POST['fecha_llamada']);
+
+            if (count($fecha_comprobar) === 3 && checkdate($fecha_comprobar[1], $fecha_comprobar[2], $fecha_comprobar[0])) {
+
+            } else {
+                $errores[] = 'Introduzca una fecha v&aacute;lida';
+            }
         }
         if(!empty($_POST['hora_llamada'])&& strtotime($_POST['hora_llamada']) < strtotime('09:00') || strtotime($_POST['hora_llamada']) > strtotime('18:00')) {
 
@@ -48,13 +57,16 @@ function tratar_Error(&$errores)
 
             echo  'Fecha máxima para dar una respuesta: ' . date('Y/m/d',$newTimestamp) . ' - ' .($_POST['hora_llamada']) . ' <br />';
             echo 'Estado: ' . ($_POST['peticion']) . ' <br />';
+
         }
+
     }
 }
 
 $errores = [];
 if (isset($_POST['envio'])) {
     tratar_Error($errores);
+
 }
 
 if (!isset($_POST['envio']) || !empty($errores)) {
