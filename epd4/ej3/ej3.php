@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <h1>Formulario:</h1>
+    <title>Formulario EJ3</title>
 </head>
 <body>
 <?php
