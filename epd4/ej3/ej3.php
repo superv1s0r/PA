@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
+    <h1>Formulario:</h1>
 </head>
 <body>
 <?php
