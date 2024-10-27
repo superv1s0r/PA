@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Gestión de Inventario</title>
+    <title>Gestión de Inventario EJ2</title>
     <link href="./main.css" rel="stylesheet"/>
 </head>
 <body>
