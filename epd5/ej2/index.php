@@ -21,6 +21,11 @@ if ($numFiles !== null) {
         $errors[] = "El número de archivos debe ser entre 1 y 100";
     } else {
         $directory = 'generated';
+        //Si por cualquier cosa da fallo de que no es escrbible, lo que hay que hacer es acceder desde 
+        //el terminal al directorio de XAMPP y en htdocs dentro de la carpeta del ejercicio comprobar: 
+        //1- si hay carpeta generated
+        //2- si tiene permisos de escritura
+        // si no hay pues en el terminal se los das
         if (!is_dir($directory)) {
             if (mkdir($directory, 0777, true)) {
                 echo "Directorio '$directory' creado con éxito.<br>";
