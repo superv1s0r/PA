@@ -42,25 +42,28 @@ if (isset($_POST['envio'])) {
 
             while (($lineaLeido = fgets($fichero)) !== false) {
                 $linea++;
+                $LineaValidada = htmlspecialchars(strip_tags($lineaLeido));
 
                 if ($linea > 100) {
 
                     $errores[] = "El archivo tiene más de 100 líneas.";
                     break;
                 }
-                $lineLeido = trim($lineaLeido);
+                $LineaValidada = trim($LineaValidada);
 
-                if ($lineLeido === '') {
+                if ($LineaValidada === '') {
 
                     $lineasVacias++;
                     $errores[] = "Línea $linea está vacía.";
 
-                } else if (strlen(htmlspecialchars(strip_tags($lineaLeido) > 500))) {
+                } else if (strlen($LineaValidada > 500)) {
 
                     $errores[] = "Línea $linea supera los 500 caracteres.";
                 }
             }
+
             fclose($fichero);
+
         } else {
             $errores[] = "El archivo no tiene la extensión .txt";
         }
