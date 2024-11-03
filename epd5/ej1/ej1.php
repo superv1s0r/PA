@@ -57,7 +57,7 @@ if (isset($_POST['envio'])) {
 
                 } else if (strlen(htmlspecialchars(strip_tags($lineaLeido) > 500))) {
 
-                    $errores[] = "Línea $linea excede los 500 caracteres.";
+                    $errores[] = "Línea $linea supera los 500 caracteres.";
                 }
             }
             fclose($fichero);
