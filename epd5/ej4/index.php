@@ -129,7 +129,7 @@ $inventario = leerInventario($archivo_csv);
                         <td><?php echo htmlspecialchars($producto[1]); ?></td>
                         <td><?php echo htmlspecialchars($producto[2]); ?></td>
                         <td><?php echo htmlspecialchars($producto[3]); ?></td>
-                        <td><?php echo htmlspecialchars(number_format((float)$producto[4], 2)); ?></td>
+                        <td><?php echo htmlspecialchars(number_format((float)$producto[4], 2)); ?> €</td>
                         <td>
                             <a href="index.php?accion=eliminar&id=<?php echo urlencode($producto[0]); ?>" onclick="return confirm('¿Estás seguro de que quieres eliminar este artículo?');">Eliminar</a> |
                             <a href="index.php?accion=editar&id=<?php echo urlencode($producto[0]); ?>">Actualizar</a>
