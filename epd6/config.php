@@ -1,11 +1,14 @@
 <?php
-// config.php
+$host = "localhost";
+$username = "root";
+$password = "";
+$dbname = "Usuario";
 
-$host = 'localhost';
-$dbname = 'epd06';
-$username = 'root';
-$password = '';
-$conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+$conn = new mysqli($host, $username, $password, $dbname);
 
-echo "Connected successfully";
+if (!$conn) {
+    die("Conexion fallida". mysqli_connect_error());
+}else{
+    echo "Conectado con exito!!";
+}
 ?>
