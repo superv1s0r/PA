@@ -1,7 +1,6 @@
 function calcularDiferenciaHoras() {
-
-    let hora1 = prompt("Introduce la primera hora en formato hh:mm:ss");
-    let hora2 = prompt("Introduce la segunda hora en formato hh:mm:ss");
+    let hora1 = prompt("Introduce la primera hora (hh:mm:ss)");
+    let hora2 = prompt("Introduce la segunda hora (hh:mm:ss)");
 
     let formatoHora = /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/;
 
@@ -10,26 +9,21 @@ function calcularDiferenciaHoras() {
         return;
     }
 
-    let fechaBase = new Date();
-    let [h1, m1, s1] = hora1.split(":");
-    let [h2, m2, s2] = hora2.split(":");
+    let [h1, m1, s1] = hora1.split(":").map(Number);
+    let [h2, m2, s2] = hora2.split(":").map(Number);
 
-    let tiempo1 = new Date(fechaBase.getFullYear(), fechaBase.getMonth(), fechaBase.getDate(), h1, m1, s1);
-    let tiempo2 = new Date(fechaBase.getFullYear(), fechaBase.getMonth(), fechaBase.getDate(), h2, m2, s2);
+    let diferenciaSegundos = ((h2 * 3600 + m2 * 60 + s2) - (h1 * 3600 + m1 * 60 + s1));
 
-    if (tiempo2 <= tiempo1) {
-        alert("ERROR: La segunda hora introducida es anterior a la primera.");
+    if (diferenciaSegundos <= 0) {
+        alert("ERROR: La segunda hora introducida es anterior o igual a la primera.");
         return;
     }
 
-    let diferenciaMilisegundos = tiempo2 - tiempo1;
+    let horas = Math.floor(diferenciaSegundos / 3600);
+    let minutos = Math.floor((diferenciaSegundos % 3600) / 60);
+    let segundos = diferenciaSegundos % 60;
 
-    let segundosTotales = Math.floor(diferenciaMilisegundos / 1000);
-    let horas = Math.floor(segundosTotales / 3600);
-    let minutos = Math.floor((segundosTotales % 3600) / 60);
-    let segundos = segundosTotales % 60;
-
-    alert("Faltan: " + horas + " horas, " + minutos + " minutos y " + segundos + " segundos.");
+    alert(`Faltan: ${horas} horas, ${minutos} minutos y ${segundos} segundos.`);
 }
 
 calcularDiferenciaHoras();
