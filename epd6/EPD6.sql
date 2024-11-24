@@ -7,9 +7,11 @@
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET
+SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET
+time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -20,8 +22,10 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `EPD6`
 --
-CREATE DATABASE IF NOT EXISTS `EPD6` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `EPD6`;
+CREATE
+DATABASE IF NOT EXISTS `EPD6` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE
+`EPD6`;
 
 -- --------------------------------------------------------
 
@@ -30,11 +34,12 @@ USE `EPD6`;
 --
 
 DROP TABLE IF EXISTS `logs`;
-CREATE TABLE `logs` (
-  `id` int(11) NOT NULL,
-  `descripcion` text NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `tipo_accion` enum('crear','actualizar','leer','listar','borrar') NOT NULL
+CREATE TABLE `logs`
+(
+    `id`          int(11) NOT NULL,
+    `descripcion` text NOT NULL,
+    `id_usuario`  int(11) NOT NULL,
+    `tipo_accion` enum('crear','actualizar','leer','listar','borrar') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -44,12 +49,13 @@ CREATE TABLE `logs` (
 --
 
 DROP TABLE IF EXISTS `producto`;
-CREATE TABLE `producto` (
-  `sku` int(11) NOT NULL,
-  `descripcion` varchar(255) NOT NULL,
-  `num_pasillo` int(11) NOT NULL,
-  `num_estanteria` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL
+CREATE TABLE `producto`
+(
+    `sku`            int(11) NOT NULL,
+    `descripcion`    varchar(255) NOT NULL,
+    `num_pasillo`    int(11) NOT NULL,
+    `num_estanteria` int(11) NOT NULL,
+    `cantidad`       int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -59,11 +65,16 @@ CREATE TABLE `producto` (
 --
 
 DROP TABLE IF EXISTS `rol`;
-CREATE TABLE `rol` (
-  `id_rol` int(11) NOT NULL,
-  `nombre_rol` enum('administrativo','operario','administrador') NOT NULL
+CREATE TABLE `rol`
+(
+    `id_rol`     int(11) NOT NULL,
+    `nombre_rol` enum('administrativo','operario','administrador') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO rol (id_rol, nombre_rol)
+VALUES (1, 'Administrador'),
+       (2, 'Administrativo'),
+       (3, 'Operario');
 -- --------------------------------------------------------
 
 --
@@ -71,15 +82,22 @@ CREATE TABLE `rol` (
 --
 
 DROP TABLE IF EXISTS `usuario`;
-CREATE TABLE `usuario` (
-  `id_usuario` int(11) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `nombre` varchar(255) NOT NULL,
-  `apellidos` varchar(255) NOT NULL,
-  `id_rol` int(11) NOT NULL
+CREATE TABLE `usuario`
+(
+    `id_usuario` int(11) NOT NULL,
+    `email`      varchar(50)  NOT NULL,
+    `password`   varchar(255) NOT NULL,
+    `nombre`     varchar(255) NOT NULL,
+    `apellidos`  varchar(255) NOT NULL,
+    `id_rol`     int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--contraseña es 1234
+INSERT INTO usuario (id_usuario, email, password, nombre, apellidos, id_rol)
+VALUES (1, 'admin@ejemplo.com', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 'Admin', 'Principal',
+        1),
+       (2, 'operario@ejemplo.com', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 'Operario',
+        'Secundario', 3);
 --
 -- Índices para tablas volcadas
 --
@@ -88,26 +106,26 @@ CREATE TABLE `usuario` (
 -- Indices de la tabla `logs`
 --
 ALTER TABLE `logs`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `producto`
 --
 ALTER TABLE `producto`
-  ADD PRIMARY KEY (`sku`);
+    ADD PRIMARY KEY (`sku`);
 
 --
 -- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
-  ADD PRIMARY KEY (`id_rol`),
+    ADD PRIMARY KEY (`id_rol`),
   ADD UNIQUE KEY `nombre_rol` (`nombre_rol`);
 
 --
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id_usuario`),
+    ADD PRIMARY KEY (`id_usuario`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
@@ -118,25 +136,25 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `id` int (11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `sku` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `sku` int (11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `id_rol` int (11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `id_usuario` int (11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
