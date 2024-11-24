@@ -15,7 +15,7 @@ $mensaje = '';
 $error = '';
 
 try {
-    $conexion = Database::getConnection(); // Obtener la conexión PDO
+    $conexion = Database::getConnection();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $accion = $_POST['accion'];
