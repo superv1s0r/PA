@@ -28,4 +28,12 @@ class Helper {
         $output .= "</ul>";
         return $output;
     }
+    public static function validateEmailDomain($email, $domain = '@almacen.com')
+    {
+        if (!str_ends_with($email, $domain)) {
+            return "El email debe tener el dominio '$domain'.";
+        }
+        return null; // Retorna null si no hay errores
+    }
+
 }

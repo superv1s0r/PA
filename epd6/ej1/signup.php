@@ -1,49 +1,120 @@
 <?php
-$host = 'localhost';         
-$dbname = 'mysql'; 
-$username = 'root';          
+require_once 'config.php'; // Conexión a la base de datos
+require_once 'utilidad.php'; // Funciones de utilidad
+
+// Inicializar variables para el formulario
+$errors = [];
+$name = '';
+$surname = '';
+$email = '';
 $password = '';
+$role = '';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST['nombre'];
-    $usuario = $_POST['usuario'];
-    $contrasenya = $_POST['contrasenya'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Recibir y sanitizar los datos enviados por el formulario
+    $name = Helper::sanitizeInput($_POST['name']);
+    $surname = Helper::sanitizeInput($_POST['surname']);
+    $email = Helper::sanitizeInput($_POST['email']);
+    $password = Helper::sanitizeInput($_POST['password']);
+    $role = Helper::sanitizeInput($_POST['role']);
 
-    $hashed_password = password_hash($contrasenya, PASSWORD_BCRYPT);
+    // Validar los campos
+    $errors = Helper::validateFields([
+        'Nombre' => $name,
+        'Apellidos' => $surname,
+        'Email' => $email,
+        'Contraseña' => $password,
+        'Rol' => $role
+    ]);
 
-    try {
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Validar el dominio del email
+    $emailDomainError = Helper::validateEmailDomain($email);
+    if ($emailDomainError) {
+        $errors['Email'] = $emailDomainError;
+    }
 
-        $stmt = $pdo->prepare("INSERT INTO Usuario (nombre, usuario, contrasenya) VALUES (:nombre, :usuario, :contrasenya)");
-        $stmt->bindParam(':nombre', $nombre);
-        $stmt->bindParam(':usuario', $usuario);
-        $stmt->bindParam(':contrasenya', $hashed_password);
+    // Si no hay errores, insertar en la base de datos
+    if (empty($errors)) {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $stmt->execute();
-        session_start();
-        $_SESSION['usuario'] = $usuario;
-        setcookie("ultimoUsuario", $usuario, time() + 24 * 60 * 60);
+        try {
+            $db = Database::getConnection();
 
-        header("Location: index.php?success=El Usuario se ha creado correctamente!");
-    } catch (PDOException $e) {
-    
-        if ($e->getCode() == 23000) { 
-            if (strpos($e->getMessage(), 'usuario') !== false) {
-                header('Location: index.php?error=' . urlencode("Error: El nombre de usuario ya está registrado."));
+            // Verificar si el rol existe en la tabla `rol`
+            $stmt = $db->prepare("SELECT id_rol FROM rol WHERE nombre_rol = :role");
+            $stmt->execute([':role' => $role]);
+            $roleRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$roleRow) {
+                $errors['Rol'] = "El rol especificado no existe.";
+            } else {
+                $roleId = $roleRow['id_rol'];
+
+                // Insertar el usuario
+                $stmt = $db->prepare(
+                    "INSERT INTO usuario (email, password, nombre, apellidos, id_rol)
+                    VALUES (:email, :password, :name, :surname, :roleId)"
+                );
+
+                $stmt->execute([
+                    ':email' => $email,
+                    ':password' => $hashedPassword,
+                    ':name' => $name,
+                    ':surname' => $surname,
+                    ':roleId' => $roleId
+                ]);
+
+                echo "<p style='color: green;'>Usuario registrado con éxito.</p>";
             }
-        } else {
-            echo "Error: " . $e->getMessage();
+        } catch (PDOException $e) {
+            echo "<p style='color: red;'>Error al registrar usuario: " . $e->getMessage() . "</p>";
         }
     }
 }
-
 ?>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <link rel="stylesheet" href="./assets/signupStyles.css">
+</head>
+<body>
+   
+    <div class="container">
+     <h1>Registro de Usuario</h1>
 
-<script>
-    setTimeout(function() {
-        window.location.href = "./index.php";
-    }, 4000); 
-</script>
+    <form method="POST" action="">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" value="<?= htmlspecialchars($name) ?>" required><br><br>
 
+        <label for="surname">Apellidos:</label>
+        <input type="text" id="surname" name="surname" value="<?= htmlspecialchars($surname) ?>" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="<?= htmlspecialchars($email) ?>" required><br><br>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <label for="role">Rol:</label>
+        <select id="role" name="role" required>
+            <option value="">Seleccione un rol</option>
+            <option value="administrador" <?= $role === 'administrador' ? 'selected' : '' ?>>Administrador</option>
+            <option value="administrativo" <?= $role === 'administrativo' ? 'selected' : '' ?>>Administrativo</option>
+            <option value="operario" <?= $role === 'operario' ? 'selected' : '' ?>>Operario</option>
+        </select><br><br>
+
+        <button type="submit">Registrar</button>
+    </form>
+        <?php 
+        // Mostrar errores si los hay
+        if (!empty($errors)) {
+            echo Helper::formatErrors($errors);
+        }
+?>
+    </div>
+</body>
+</html>
