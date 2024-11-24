@@ -15,7 +15,7 @@ $mensaje = '';
 $error = '';
 
 try {
-    $conexion = Database::getConnection();
+    $conexion = Database::getConnection(); // Obtener la conexión PDO
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $accion = $_POST['accion'];
@@ -98,74 +98,76 @@ $mensaje = $_GET['mensaje'] ?? $mensaje;
     <link rel="stylesheet" href="assets/productCarStyles.css">
 </head>
 <body>
-    <h1>Carrito de Operaciones</h1>
-    <nav>
-        <a href="index.php">Inicio</a>
-        <a href="logout.php">Cerrar Sesión</a>
-    </nav>
+    <div class="container">
+        <h1>Carrito de Operaciones</h1>
+        <nav>
+            <a href="index.php">Inicio</a>
+            <a href="logout.php">Cerrar Sesión</a>
+        </nav>
 
-    <?php if ($mensaje): ?>
-        <div class="mensaje"><?php echo htmlspecialchars($mensaje); ?></div>
-    <?php endif; ?>
-    <?php if ($error): ?>
-        <div class="error"><?php echo $error; ?></div>
-    <?php endif; ?>
+        <?php if ($mensaje): ?>
+            <div class="mensaje"><?php echo htmlspecialchars($mensaje); ?></div>
+        <?php endif; ?>
+        <?php if ($error): ?>
+            <div class="error"><?php echo $error; ?></div>
+        <?php endif; ?>
 
-    <form action="carrito.php" method="POST">
-        <h2>Agregar/Modificar Producto</h2>
-        <label for="sku">SKU (para modificar):</label>
-        <input type="number" name="sku" id="sku" placeholder="SKU del producto">
-        
-        <label for="descripcion">Descripción:</label>
-        <input type="text" name="descripcion" id="descripcion" placeholder="Descripción del producto" required>
-        
-        <label for="num_pasillo">Número de Pasillo:</label>
-        <input type="number" name="num_pasillo" id="num_pasillo" required>
-        
-        <label for="num_estanteria">Número de Estantería:</label>
-        <input type="number" name="num_estanteria" id="num_estanteria" required>
-        
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" name="cantidad" id="cantidad" required>
-        
-        <button type="submit" name="accion" value="agregar">Agregar</button>
-        <button type="submit" name="accion" value="modificar">Modificar</button>
-    </form>
-
-    <h2>Productos en el Carrito</h2>
-    <?php if (empty($_SESSION['carrito'])): ?>
-        <p>No hay productos en el carrito.</p>
-    <?php else: ?>
-        <table>
-            <tr>
-                <th>SKU</th>
-                <th>Descripción</th>
-                <th>Pasillo</th>
-                <th>Estantería</th>
-                <th>Cantidad</th>
-                <th>Operación</th>
-                <th>Acciones</th>
-            </tr>
-            <?php foreach ($_SESSION['carrito'] as $producto): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($producto['sku']); ?></td>
-                    <td><?php echo htmlspecialchars($producto['descripcion']); ?></td>
-                    <td><?php echo htmlspecialchars($producto['num_pasillo']); ?></td>
-                    <td><?php echo htmlspecialchars($producto['num_estanteria']); ?></td>
-                    <td><?php echo htmlspecialchars($producto['cantidad']); ?></td>
-                    <td><?php echo htmlspecialchars($producto['operacion']); ?></td>
-                    <td>
-                        <form action="carrito.php" method="POST" style="display:inline;">
-                            <input type="hidden" name="sku" value="<?php echo htmlspecialchars($producto['sku']); ?>">
-                            <button type="submit" name="accion" value="eliminar" onclick="return confirm('¿Está seguro de eliminar este producto del carrito?')">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
         <form action="carrito.php" method="POST">
-            <button type="submit" name="accion" value="confirmar">Confirmar Operaciones</button>
+            <h2>Agregar/Modificar Producto</h2>
+            <label for="sku">SKU (para modificar):</label>
+            <input type="number" name="sku" id="sku" placeholder="SKU del producto">
+            
+            <label for="descripcion">Descripción:</label>
+            <input type="text" name="descripcion" id="descripcion" placeholder="Descripción del producto" required>
+            
+            <label for="num_pasillo">Número de Pasillo:</label>
+            <input type="number" name="num_pasillo" id="num_pasillo" required>
+            
+            <label for="num_estanteria">Número de Estantería:</label>
+            <input type="number" name="num_estanteria" id="num_estanteria" required>
+            
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" name="cantidad" id="cantidad" required>
+            
+            <button type="submit" name="accion" value="agregar">Agregar</button>
+            <button type="submit" name="accion" value="modificar">Modificar</button>
         </form>
-    <?php endif; ?>
+
+        <h2>Productos en el Carrito</h2>
+        <?php if (empty($_SESSION['carrito'])): ?>
+            <p>No hay productos en el carrito.</p>
+        <?php else: ?>
+            <table>
+                <tr>
+                    <th>SKU</th>
+                    <th>Descripción</th>
+                    <th>Pasillo</th>
+                    <th>Estantería</th>
+                    <th>Cantidad</th>
+                    <th>Operación</th>
+                    <th>Acciones</th>
+                </tr>
+                <?php foreach ($_SESSION['carrito'] as $producto): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($producto['sku']); ?></td>
+                        <td><?php echo htmlspecialchars($producto['descripcion']); ?></td>
+                        <td><?php echo htmlspecialchars($producto['num_pasillo']); ?></td>
+                        <td><?php echo htmlspecialchars($producto['num_estanteria']); ?></td>
+                        <td><?php echo htmlspecialchars($producto['cantidad']); ?></td>
+                        <td><?php echo htmlspecialchars($producto['operacion']); ?></td>
+                        <td>
+                            <form action="carrito.php" method="POST" style="display:inline;">
+                                <input type="hidden" name="sku" value="<?php echo htmlspecialchars($producto['sku']); ?>">
+                                <button type="submit" name="accion" value="eliminar" onclick="return confirm('¿Está seguro de eliminar este producto del carrito?')">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+            <form action="carrito.php" method="POST">
+                <button type="submit" name="accion" value="confirmar">Confirmar Operaciones</button>
+            </form>
+        <?php endif; ?>
+    </div>
 </body>
 </html>

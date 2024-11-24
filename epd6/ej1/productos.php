@@ -11,7 +11,7 @@ $mensaje = '';
 $error = '';
 
 try {
-    $conexion = Database::getConnection();
+    $conexion = Database::getConnection(); // Obtener la conexión PDO
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $accion = $_POST['accion'];
@@ -52,6 +52,8 @@ try {
 } catch (PDOException $e) {
     $error = "Error de conexión o consulta: " . $e->getMessage();
 }
+
+$mensaje = $_GET['mensaje'] ?? $mensaje;
 ?>
 
 <!DOCTYPE html>
@@ -143,12 +145,15 @@ try {
         $total_paginas = ceil($total_registros / $registros_por_pagina);
 
         echo "<p>Página $pagina de $total_paginas</p>";
+        echo "<div class='pagination'>";
         if ($pagina > 1) {
             echo "<a href='productos.php?pagina=" . ($pagina - 1) . "&busqueda=$busqueda'>Página Anterior</a>";
         }
         if ($pagina < $total_paginas) {
             echo "<a href='productos.php?pagina=" . ($pagina + 1) . "&busqueda=$busqueda'>Página Siguiente</a>";
         }
+        echo "</div>";
+
         ?>
     </div>
 </body>
