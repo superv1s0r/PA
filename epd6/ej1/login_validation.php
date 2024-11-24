@@ -1,51 +1,50 @@
 <?php
-$host = 'localhost';         
-$dbname = 'mysql'; 
-$username = 'root';          
+$host = 'localhost';
+$dbname = 'EPD6';
+$username = 'root';
 $password = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $usuario = $_POST['usuario'];
+
+    $usuario = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_EMAIL); // Usamos SANITIZE_EMAIL para validar el formato de email
     $contrasenya = $_POST['contrasenya'];
 
-    $hashed_password = password_hash($contrasenya, PASSWORD_BCRYPT);
+    if (strpos($usuario, '@almacen.com') === false) {
+        $error = "El email debe tener el dominio @almacen.com.";
+    } else {
+        try {
+            $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    try {
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmt = $pdo->prepare("SELECT * FROM usuario WHERE email = :usuario AND contrasenva = :password");
+            $stmt->bindParam(':usuario', $usuario);
+            $stmt->execute();
 
-        $stmt = $pdo->prepare("SELECT * FROM  Usuario WHERE usuario = :usuario, contrasenya = :contrasenya");
-        $stmt->bindParam(':usuario', $usuario);
-        $stmt->bindParam(':contrasenya', $hashed_password);
+            if ($stmt->rowCount() == 1) {
+                $usuario_db = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $stmt->execute();
-        
-        if($stmt->rowCount() == 1){
-            session_start();
-            $_SESSION['usuario'] = $usuario;
-            setcookie("ultimoUsuario", $usuario, time() + 24 * 60 * 60);
-            header("Location: welcome.php ");
-        }else{
-            header("Location: login.php");
-        }
-    } catch (PDOException $e) {
-    
-        if ($e->getCode() == 23000) { 
-            if (strpos($e->getMessage(), 'usuario') !== false) {
-                header('Location: index.php?error=' . urlencode("Error: El nombre de usuario ya está registrado."));
+                if (password_verify($contrasenya, $usuario_db['password'])) {
+                    session_start();
+                    $_SESSION['usuario'] = $usuario;
+                    setcookie("ultimoUsuario", $usuario, time() + 24 * 60 * 60);
+                    header("Location: index.php");
+                    exit;
+                } else {
+                    header("Location: login.php?error=" . urlencode("Contraseña incorrecta."));
+                    exit;
+                }
+            } else {
+                header("Location: login.php?error=" . urlencode("El usuario no existe."));
+                exit;
             }
-        } else {
-            echo "Error: " . $e->getMessage();
+        } catch (PDOException $e) {
+            echo "Error de conexión: " . $e->getMessage();
         }
     }
 }
-
 ?>
-
-
 <script>
     setTimeout(function() {
         window.location.href = "./index.php";
-    }, 1000); 
+    }, 1000);
 </script>
-

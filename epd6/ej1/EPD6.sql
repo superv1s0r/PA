@@ -1,7 +1,6 @@
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
---
 -- Servidor: localhost
 -- Tiempo de generación: 21-11-2024 a las 16:30:05
 -- Versión del servidor: 10.4.28-MariaDB
@@ -13,15 +12,12 @@ START TRANSACTION;
 SET
 time_zone = "+00:00";
 
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
 -- Base de datos: `EPD6`
---
 CREATE
 DATABASE IF NOT EXISTS `EPD6` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE
@@ -29,132 +25,79 @@ USE
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `logs`
---
-
 DROP TABLE IF EXISTS `logs`;
 CREATE TABLE `logs`
 (
-    `id`          int(11) NOT NULL,
-    `descripcion` text NOT NULL,
-    `id_usuario`  int(11) NOT NULL,
-    `tipo_accion` enum('crear','actualizar','leer','listar','borrar') NOT NULL
+    `id`          INT(11) NOT NULL AUTO_INCREMENT,
+    `descripcion` TEXT NOT NULL,
+    `id_usuario`  INT(11) NOT NULL,
+    `tipo_accion` ENUM('crear', 'actualizar', 'leer', 'listar', 'borrar') NOT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `producto`
---
-
 DROP TABLE IF EXISTS `producto`;
 CREATE TABLE `producto`
 (
-    `sku`            int(11) NOT NULL,
-    `descripcion`    varchar(255) NOT NULL,
-    `num_pasillo`    int(11) NOT NULL,
-    `num_estanteria` int(11) NOT NULL,
-    `cantidad`       int(11) NOT NULL
+    `sku`            INT(11) NOT NULL AUTO_INCREMENT,
+    `descripcion`    VARCHAR(255) NOT NULL,
+    `num_pasillo`    INT(11) NOT NULL,
+    `num_estanteria` INT(11) NOT NULL,
+    `cantidad`       INT(11) NOT NULL,
+    PRIMARY KEY (`sku`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `rol`
---
-
 DROP TABLE IF EXISTS `rol`;
 CREATE TABLE `rol`
 (
-    `id_rol`     int(11) NOT NULL,
-    `nombre_rol` enum('administrativo','operario','administrador') NOT NULL
+    `id_rol`     INT(11) NOT NULL AUTO_INCREMENT,
+    `nombre_rol` ENUM('administrativo', 'operario', 'administrador') NOT NULL,
+    PRIMARY KEY (`id_rol`),
+    UNIQUE KEY `nombre_rol` (`nombre_rol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO rol (id_rol, nombre_rol)
+INSERT INTO `rol` (id_rol, nombre_rol)
 VALUES (1, 'Administrador'),
        (2, 'Administrativo'),
        (3, 'Operario');
+
 -- --------------------------------------------------------
 
---
 -- Estructura de tabla para la tabla `usuario`
---
-
 DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario`
 (
-    `id_usuario` int(11) NOT NULL,
-    `email`      varchar(50)  NOT NULL,
-    `password`   varchar(255) NOT NULL,
-    `nombre`     varchar(255) NOT NULL,
-    `apellidos`  varchar(255) NOT NULL,
-    `id_rol`     int(11) NOT NULL
+    `id_usuario` INT(11) NOT NULL AUTO_INCREMENT,
+    `email`      VARCHAR(50)  NOT NULL,
+    `password`   VARCHAR(255) NOT NULL,
+    `nombre`     VARCHAR(255) NOT NULL,
+    `apellidos`  VARCHAR(255) NOT NULL,
+    `id_rol`     INT(11) NOT NULL,
+    PRIMARY KEY (`id_usuario`),
+    UNIQUE KEY `email` (`email`),
+    FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---contraseña es 1234
-INSERT INTO usuario (id_usuario, email, password, nombre, apellidos, id_rol)
-VALUES (1, 'admin@ejemplo.com', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 'Admin', 'Principal',
+-- (login: "1234")
+INSERT INTO `usuario` (id_usuario, email, password, nombre, apellidos, id_rol)
+VALUES (1, 'admin@almacen.com', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 'Admin', 'Principal',
         1),
-       (2, 'operario@ejemplo.com', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 'Operario',
+       (2, 'operario@almacen.com', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 'Operario',
         'Secundario', 3);
---
--- Índices para tablas volcadas
---
 
---
--- Indices de la tabla `logs`
---
-ALTER TABLE `logs`
-    ADD PRIMARY KEY (`id`);
+-- --------------------------------------------------------
 
---
--- Indices de la tabla `producto`
---
-ALTER TABLE `producto`
-    ADD PRIMARY KEY (`sku`);
+-- AUTO_INCREMENT para las tablas
+ALTER TABLE `logs` MODIFY `id` INT (11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `producto` MODIFY `sku` INT (11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `rol` MODIFY `id_rol` INT (11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `usuario` MODIFY `id_usuario` INT (11) NOT NULL AUTO_INCREMENT;
 
---
--- Indices de la tabla `rol`
---
-ALTER TABLE `rol`
-    ADD PRIMARY KEY (`id_rol`),
-  ADD UNIQUE KEY `nombre_rol` (`nombre_rol`);
-
---
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
-    ADD PRIMARY KEY (`id_usuario`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `logs`
---
-ALTER TABLE `logs`
-    MODIFY `id` int (11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `producto`
---
-ALTER TABLE `producto`
-    MODIFY `sku` int (11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `rol`
---
-ALTER TABLE `rol`
-    MODIFY `id_rol` int (11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `usuario`
---
-ALTER TABLE `usuario`
-    MODIFY `id_usuario` int (11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

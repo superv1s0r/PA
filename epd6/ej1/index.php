@@ -1,52 +1,54 @@
 <?php
-if(isset($_COOKIE['ultimoUsuario'])){
-    session_start();
-    $_SESSION['usuario'] = $_COOKIE['ultimoUsuario'];
-    header('Location: welcome.php');
-}
 session_start();
-if(isset($_SESSION['usuario'])){
-    header('Location: welcome.php');
-}
-?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Page</title>
-     <link rel="stylesheet" href="./main.css"> 
-</head>
-<body>
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "EPD6";
 
+try {
 
+    $dsn = "mysql:host=$host;dbname=$database";
+    $conn = new PDO($dsn, $user, $password);
 
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-<div class="registration-form">
-    <h2>Register</h2>
-    <form action="./register.php" method="post">
-        <label for="nombre">Nombre</label>
-        <input type="text" id="username" name="nombre" required>
-
-        <label for="usuario">Usuario</label>
-        <input type="text" id="password" name="usuario" required>
-        
-        <label for="contrasenya">Password</label>
-        <input type="password" id="password" name="contrasenya" required>
-
-
-        <button type="submit">Register</button>
-    </form>
- <?php
-    if (isset($_GET['error'])) {
-        echo '<div class="message error">' . htmlspecialchars($_GET['error']) . '</div>';
-    } elseif (isset($_GET['success'])) {
-        echo '<div class="message success">' . htmlspecialchars($_GET['success']) . '</div>';
+    if (!isset($_SESSION['usuario_id'])) {
+        header('Location: login.php');
+        exit;
     }
+    $query = "SELECT u.id_usuario, u.nombre, r.nombre_rol FROM usuario u
+              JOIN rol r ON u.id_rol = r.id_rol WHERE u.id_usuario = :id_usuario";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':id_usuario', $_SESSION['usuario_id']);
+    $stmt->execute();
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$usuario) {
+        echo "Usuario no encontrado.";
+        exit;
+    }
+
+    echo "Bienvenido, " . $usuario['nombre'] . " (" . $usuario['nombre_rol'] . ")<br><br>";
+
+    echo '<a href="">Crear</a><br>';
+    echo '<a href="">Modificar</a><br>';
+    echo '<a href="">Listar</a><br>';
+    echo '<a href="">Borrar</a><br>';
+
+    if ($usuario['nombre_rol'] == 'Administrador') {
+        echo '<a href="">Administrar</a><br>';
+    } elseif ($usuario['nombre_rol'] == 'Operario') {
+        echo '<a href="">Productos</a><br>';
+    } elseif ($usuario['nombre_rol'] == 'Administrativo') {
+        echo '<a href="">Ventas</a><br>';
+    }
+
+    echo '<br><a href="index.php">INICIO</a>';
+
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
+
+$conn = null;
 ?>
-</div>
-
-</body>
-</html>
-
