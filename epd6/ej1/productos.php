@@ -4,45 +4,56 @@ require_once 'config.php';
 require_once 'utilidad.php';
 
 if (!isset($_SESSION['usuario']) || ($_SESSION['rol'] !== 'operario' && $_SESSION['rol'] !== 'administrador')) {
-    header('Location: login.php?error=acceso_denegado');
-    exit();
+    Helper::redirect('login.php?error=acceso_denegado');
 }
 
 $mensaje = '';
 $error = '';
 
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $accion = $_POST['accion'];
-    $sku = $_POST['sku'] ?? null;
-    $descripcion = trim($_POST['descripcion']);
-    $num_pasillo = intval($_POST['num_pasillo']);
-    $num_estanteria = intval($_POST['num_estanteria']);
-    $cantidad = intval($_POST['cantidad']);
+    $sku = intval($_POST['sku'] ?? 0);
+    $descripcion = Helper::sanitizeInput($_POST['descripcion'] ?? '');
+    $num_pasillo = intval($_POST['num_pasillo'] ?? 0);
+    $num_estanteria = intval($_POST['num_estanteria'] ?? 0);
+    $cantidad = intval($_POST['cantidad'] ?? 0);
 
-    if ($accion === 'crear') {
-        $query = "INSERT INTO producto (descripcion, num_pasillo, num_estanteria, cantidad) VALUES (?, ?, ?, ?)";
-        $stmt = $conexion->prepare($query);
-        $stmt->bind_param('siii', $descripcion, $num_pasillo, $num_estanteria, $cantidad);
-    } elseif ($accion === 'modificar') {
-        $query = "UPDATE producto SET descripcion=?, num_pasillo=?, num_estanteria=?, cantidad=? WHERE sku=?";
-        $stmt = $conexion->prepare($query);
-        $stmt->bind_param('siiii', $descripcion, $num_pasillo, $num_estanteria, $cantidad, $sku);
-    } elseif ($accion === 'eliminar' && $_SESSION['rol'] === 'administrador') {
-        $sku = intval($_POST['sku']);
-        $query = "DELETE FROM producto WHERE sku=?";
-        $stmt = $conexion->prepare($query);
-        $stmt->bind_param('i', $sku);
+    $errors = Helper::validateFields([
+        'Descripción' => $descripcion,
+        'Número de Pasillo' => $num_pasillo,
+        'Número de Estantería' => $num_estanteria,
+        'Cantidad' => $cantidad
+    ]);
+
+    if (!empty($errors)) {
+        $error = Helper::formatErrors($errors);
     } else {
-        $error = 'Acción no permitida o datos inválidos.';
-    }
-
-    if (isset($stmt) && $stmt->execute()) {
-        $mensaje = "Operación realizada con éxito.";
-    } elseif (isset($stmt)) {
-        $error = "Error: " . $conexion->error;
+        if ($accion === 'crear') {
+            $query = "INSERT INTO producto (descripcion, num_pasillo, num_estanteria, cantidad) VALUES (?, ?, ?, ?)";
+            $stmt = $conexion->prepare($query);
+            $stmt->bind_param('siii', $descripcion, $num_pasillo, $num_estanteria, $cantidad);
+            $stmt->execute();
+            $mensaje = "Producto creado exitosamente.";
+        } elseif ($accion === 'modificar') {
+            $query = "UPDATE producto SET descripcion=?, num_pasillo=?, num_estanteria=?, cantidad=? WHERE sku=?";
+            $stmt = $conexion->prepare($query);
+            $stmt->bind_param('siiii', $descripcion, $num_pasillo, $num_estanteria, $cantidad, $sku);
+            $stmt->execute();
+            $mensaje = "Producto modificado exitosamente.";
+        } elseif ($accion === 'eliminar' && $_SESSION['rol'] === 'administrador') {
+            $query = "DELETE FROM producto WHERE sku=?";
+            $stmt = $conexion->prepare($query);
+            $stmt->bind_param('i', $sku);
+            $stmt->execute();
+            $mensaje = "Producto eliminado exitosamente.";
+        }
     }
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -62,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="mensaje"><?php echo htmlspecialchars($mensaje); ?></div>
     <?php endif; ?>
     <?php if ($error): ?>
-        <div class="error"><?php echo htmlspecialchars($error); ?></div>
+        <div class="error"><?php echo $error; ?></div>
     <?php endif; ?>
 
     <form action="productos.php" method="POST">
@@ -98,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $registros_por_pagina = 5;
     $offset = ($pagina - 1) * $registros_por_pagina;
 
-    $busqueda = isset($_GET['busqueda']) ? $_GET['busqueda'] : '';
+    $busqueda = Helper::sanitizeInput($_GET['busqueda'] ?? '');
     $query = "SELECT * FROM producto WHERE descripcion LIKE ? LIMIT ? OFFSET ?";
     $stmt = $conexion->prepare($query);
     $like_busqueda = '%' . $busqueda . '%';
