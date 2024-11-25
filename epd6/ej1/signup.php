@@ -2,6 +2,15 @@
 require_once 'config.php'; // Conexión a la base de datos
 require_once 'utilidad.php'; // Funciones de utilidad
 
+
+session_start();
+
+// Verificar si ya hay una sesión activa o cookie configurada
+if (isset($_SESSION['usuario']) || isset($_COOKIE['usuario'])) {
+    Helper::redirect('index.php'); // Redirigir al índice si la sesión o cookie están activas
+}
+
+
 // Inicializar variables para el formulario
 $errors = [];
 $name = '';

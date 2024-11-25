@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
             'id_rol' => $_POST['id_rol']
         ];
-        $resultado = HELPER::crear($pdo, $rol, $datosUsuario);
+        $resultado = Helper::crear($pdo, $rol, $datosUsuario);
         if ($resultado === true) {
             header("Location: usuarios.php");
             exit;
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'nombre' => $_POST['nombre'],
             'email' => $_POST['email']
         ];
-        $resultado = HELPER::editar($pdo, $rol, $idUsuarioActual, $idUsuario, $nuevosDatos);
+        $resultado = Helper::editar($pdo, $rol, $idUsuarioActual, $idUsuario, $nuevosDatos);
         if ($resultado === true) {
             header("Location: usuarios.php");
             exit;
@@ -43,13 +43,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 } elseif ($accion === 'eliminar' && $idUsuario && $rol == 1) {
-    HELPER::eliminar($pdo, $idUsuario);
+    Helper::eliminar($pdo, $idUsuario);
     header("Location: usuarios.php");
     exit;
 }
 
 if ($accion === 'listar') {
-    $usuarios = HELPER::listarUsuarios($pdo, $rol, $idUsuarioActual);
+    $usuarios = Helper::listarUsuarios($pdo, $rol, $idUsuarioActual);
 }
 ?>
 
