@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Crear usuario
         $resultado = Helper::crear($pdo, $rol, $datosUsuario);
         if ($resultado === true) {
-            Helper::redirect("usuarios.php");
+            Helper::redirect("usuario.php");
         } else {
             $error = $resultado;
         }
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Editar usuario
         $resultado = Helper::editar($pdo, $rol, $idUsuarioActual, $idUsuario, $nuevosDatos);
         if ($resultado === true) {
-            Helper::redirect("usuarios.php");
+            Helper::redirect("usuario.php");
         } else {
             $error = $resultado;
         }
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } elseif ($accion === 'eliminar' && $idUsuario && $rol == 1) {
     // Eliminar usuario
     Helper::eliminar($pdo, $idUsuario);
-    Helper::redirect("usuarios.php");
+    Helper::redirect("usuario.php");
 }
 
 if ($accion === 'listar') {
@@ -67,83 +67,88 @@ if ($accion === 'listar') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Usuarios</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./assets/productCarStyles.css">
 </head>
 <body>
-<h1>Gestión de Usuarios</h1>
 
-<?php if ($accion === 'listar'): ?>
-    <a href="usuarios.php?accion=crear" class="btn">Crear Usuario</a>
-    <table border="1">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Rol</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($usuarios as $usuario): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($usuario['id_usuario']); ?></td>
-                <td><?php echo htmlspecialchars($usuario['nombre']); ?></td>
-                <td><?php echo htmlspecialchars($usuario['email']); ?></td>
-                <td>
-                    <?php
-                    switch ($usuario['id_rol']) {
-                        case 1: echo "Administrador"; break;
-                        case 2: echo "Administrativo"; break;
-                        case 3: echo "Operario"; break;
-                    }
-                    ?>
-                </td>
-                <td>
-                    <a href="usuarios.php?accion=editar&id=<?php echo $usuario['id_usuario']; ?>">Editar</a>
-                    <?php if ($rol == 1): ?>
-                        <a href="usuarios.php?accion=eliminar&id=<?php echo $usuario['id_usuario']; ?>" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
-                    <?php endif; ?>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
-<?php elseif ($accion === 'crear'): ?>
-    <h2>Crear Usuario</h2>
-    <form method="POST" action="usuarios.php?accion=crear">
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" required>
+<div class="container">
+    <h1>Gestión de Usuarios</h1>
 
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required>
+    <?php if ($accion === 'listar'): ?>
+        <a href="usuario.php?accion=crear" class="btn">Crear Usuario</a>
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($usuarios as $usuario): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($usuario['id_usuario']); ?></td>
+                        <td><?php echo htmlspecialchars($usuario['nombre']); ?></td>
+                        <td><?php echo htmlspecialchars($usuario['email']); ?></td>
+                        <td>
+                            <?php
+                            switch ($usuario['id_rol']) {
+                                case 1: echo "Administrador"; break;
+                                case 2: echo "Administrativo"; break;
+                                case 3: echo "Operario"; break;
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <a href="usuario.php?accion=editar&id=<?php echo $usuario['id_usuario']; ?>" class="btn">Editar</a>
+                            <?php if ($rol == 1): ?>
+                                <a href="usuario.php?accion=eliminar&id=<?php echo $usuario['id_usuario']; ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php elseif ($accion === 'crear'): ?>
+        <h2>Crear Usuario</h2>
+        <form method="POST" action="usuario.php?accion=crear">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" required>
 
-        <label for="password">Contraseña:</label>
-        <input type="password" name="password" id="password" required>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
 
-        <label for="id_rol">Rol:</label>
-        <select name="id_rol" id="id_rol">
-            <option value="3">Operario</option>
-            <?php if ($rol == 1): ?>
-                <option value="2">Administrativo</option>
-                <option value="1">Administrador</option>
-            <?php endif; ?>
-        </select>
+            <label for="password">Contraseña:</label>
+            <input type="password" name="password" id="password" required>
 
-        <button type="submit">Crear Usuario</button>
-    </form>
-<?php elseif ($accion === 'editar'): ?>
-    <h2>Editar Usuario</h2>
-    <form method="POST" action="usuarios.php?accion=editar&id=<?php echo htmlspecialchars($idUsuario); ?>">
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($usuario['nombre']); ?>" required>
+            <label for="id_rol">Rol:</label>
+            <select name="id_rol" id="id_rol">
+                <option value="3">Operario</option>
+                <?php if ($rol == 1): ?>
+                    <option value="2">Administrativo</option>
+                    <option value="1">Administrador</option>
+                <?php endif; ?>
+            </select>
 
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($usuario['email']); ?>" required>
+            <button type="submit" class="btn">Crear Usuario</button>
+        </form>
+    <?php elseif ($accion === 'editar'): ?>
+        <h2>Editar Usuario</h2>
+        <form method="POST" action="usuario.php?accion=editar&id=<?php echo htmlspecialchars($idUsuario); ?>">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($usuario['nombre']); ?>" required>
 
-        <button type="submit">Guardar Cambios</button>
-    </form>
-<?php endif; ?>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($usuario['email']); ?>" required>
+
+            <button type="submit" class="btn">Guardar Cambios</button>
+        </form>
+    <?php endif; ?>
+</div>
+
 </body>
 </html>
+
 

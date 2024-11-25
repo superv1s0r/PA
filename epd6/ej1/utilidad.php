@@ -65,8 +65,6 @@ class Helper
     public static function crear($pdo, $rol, $datosUsuario)
     {
 
-
-
         if ($rol == 1 || ($rol == 2 && $datosUsuario['id_rol'] == 3)) {
             $stmt = $pdo->prepare("INSERT INTO usuario (nombre, email, password, id_rol) VALUES (:nombre, :email, :password, :id_rol)");
             $stmt->bindParam(':nombre', $datosUsuario['nombre']);
