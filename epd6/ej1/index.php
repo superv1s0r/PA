@@ -1,54 +1,89 @@
 <?php
 session_start();
 
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "EPD6";
-
-try {
-
-    $dsn = "mysql:host=$host;dbname=$database";
-    $conn = new PDO($dsn, $user, $password);
-
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    if (!isset($_SESSION['usuario_id'])) {
-        header('Location: login.php');
-        exit;
-    }
-    $query = "SELECT u.id_usuario, u.nombre, r.nombre_rol FROM usuario u
-              JOIN rol r ON u.id_rol = r.id_rol WHERE u.id_usuario = :id_usuario";
-    $stmt = $conn->prepare($query);
-    $stmt->bindParam(':id_usuario', $_SESSION['usuario_id']);
-    $stmt->execute();
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$usuario) {
-        echo "Usuario no encontrado.";
-        exit;
-    }
-
-    echo "Bienvenido, " . $usuario['nombre'] . " (" . $usuario['nombre_rol'] . ")<br><br>";
-
-    echo '<a href="">Crear</a><br>';
-    echo '<a href="">Modificar</a><br>';
-    echo '<a href="">Listar</a><br>';
-    echo '<a href="">Borrar</a><br>';
-
-    if ($usuario['nombre_rol'] == 'Administrador') {
-        echo '<a href="">Administrar</a><br>';
-    } elseif ($usuario['nombre_rol'] == 'Operario') {
-        echo '<a href="">Productos</a><br>';
-    } elseif ($usuario['nombre_rol'] == 'Administrativo') {
-        echo '<a href="">Ventas</a><br>';
-    }
-
-    echo '<br><a href="index.php">INICIO</a>';
-
-} catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+if (!isset($_SESSION['usuario']) && !isset($_COOKIE['ultimoUsuario'])) {
+    header('Location: login.php');
+    exit;
 }
 
-$conn = null;
+$host = 'localhost';
+$dbname = 'EPD6';
+$username = 'root';
+$password = '';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $usuario = $_SESSION['usuario'] ?? $_COOKIE['ultimoUsuario'];
+    $stmt = $pdo->prepare("SELECT id_rol FROM usuario WHERE email = :usuario");
+    $stmt->bindParam(':usuario', $usuario);
+    $stmt->execute();
+
+    $usuario_db = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!empty($usuario_db['id_rol'])) {
+        $rol_id = $usuario_db['id_rol'];
+    } else {
+        echo "Error: El rol del usuario no está definido.";
+        exit;
+    }
+
+} catch (PDOException $e) {
+    echo "Error de conexión: " . $e->getMessage();
+    exit;
+}
+
 ?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+<!-- Botón INICIO para volver al menú principal -->
+<a href="index.php" class="inicio-btn">INICIO</a>
+
+    <h1>Bienvenido <?php echo htmlspecialchars($_SESSION['usuario'] ?? $_COOKIE['ultimoUsuario']); ?></h1>
+
+    <?php if ($rol_id == 1): ?>
+        <div class="menu-options">
+            <h2>Opciones Administrador</h2>
+            <ul>
+                <li><a href="usuario.php">Gestionar Usuarios</a></li>
+                <li><a href="productos.php">Gestionar Productos</a></li>
+            </ul>
+        </div>
+    <?php elseif ($rol_id == 2): ?>
+        <div class="menu-options">
+            <h2>Opciones Administrativas</h2>
+            <ul>
+                <li><a href="producto.php">Gestionar Productos</a></li>
+            </ul>
+        </div>
+    <?php elseif ($rol_id == 3): ?>
+        <div class="menu-options">
+            <h2>Opciones Operario</h2>
+            <ul>
+                <li><a href="producto.php">Gestionar Productos</a></li>
+                <li><a href="productos.php">Gestionar Productos</a></li>
+
+            </ul>
+        </div>
+    <?php endif; ?>
+
+    <a href="logout.php">Logout</a>
+
+<!-- Cookie de usuario -->
+<script>
+    // Si no hay cookie, la creamos al cargar la página
+    if (!document.cookie.includes('ultimoUsuario')) {
+        document.cookie = "ultimoUsuario=<?php echo htmlspecialchars($_SESSION['usuario'] ?? $_COOKIE['ultimoUsuario']); ?>; max-age=86400; path=/";
+    }
+</script>
+
+</body>
+</html>

@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $stmt = $pdo->prepare("SELECT * FROM usuario WHERE email = :usuario AND contrasenva = :password");
+            $stmt = $pdo->prepare("SELECT * FROM usuario WHERE email = :usuario");
             $stmt->bindParam(':usuario', $usuario);
             $stmt->execute();
 
@@ -26,7 +26,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (password_verify($contrasenya, $usuario_db['password'])) {
                     session_start();
                     $_SESSION['usuario'] = $usuario;
-                    setcookie("ultimoUsuario", $usuario, time() + 24 * 60 * 60);
+
+                    if (isset($usuario_db['id_rol'])) {
+                        $_SESSION['rol'] = $usuario_db['id_rol'];
+                    } else {
+                        echo "Error: id_rol no encontrado en la base de datos.";
+                        exit;
+                    }
+
+                    $_SESSION['id_usuario'] = $usuario_db['id_usuario']; // Corrección del nombre
+
+                    setcookie("ultimoUsuario", $usuario, time() + 24 * 60 * 60,"/"); // Cookie válida por 1 día
                     header("Location: index.php");
                     exit;
                 } else {
@@ -43,8 +53,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-<script>
-    setTimeout(function() {
-        window.location.href = "./index.php";
-    }, 1000);
-</script>
