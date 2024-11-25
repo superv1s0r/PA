@@ -43,7 +43,11 @@ class Helper
 
 
    public static function listarUsuarios($pdo, $rol, $idUsuarioActual)
-    {
+   {
+        $rol = Helper::sanitizeInput($rol);
+        $idUsuarioActual = Helper::sanitizeInput($idUsuarioActual);
+
+
         if ($rol == 1) {
             $stmt = $pdo->prepare("SELECT * FROM usuario");
         } elseif ($rol == 2) {
@@ -60,6 +64,9 @@ class Helper
 
     public static function crear($pdo, $rol, $datosUsuario)
     {
+
+
+
         if ($rol == 1 || ($rol == 2 && $datosUsuario['id_rol'] == 3)) {
             $stmt = $pdo->prepare("INSERT INTO usuario (nombre, email, password, id_rol) VALUES (:nombre, :email, :password, :id_rol)");
             $stmt->bindParam(':nombre', $datosUsuario['nombre']);
