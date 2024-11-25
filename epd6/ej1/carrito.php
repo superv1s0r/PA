@@ -3,8 +3,12 @@ session_start();
 require_once 'config.php';
 require_once 'utilidad.php';
 
-if (!isset($_SESSION['usuario']) || ($_SESSION['rol'] !== 'operario' && $_SESSION['rol'] !== 'administrador')) {
-    Helper::redirect('login.php?error=acceso_denegado');
+// Si el usuario ya está logueado, redirigirlo a la página principal
+if (!isset($_SESSION['usuario']) || !isset($_COOKIE['ultimoUsuario'])) {
+    Helper::redirect('login.php'); 
+}
+if($_SESSION['rol'] === 2){
+    Helper::redirect('index.php');
 }
 
 if (!isset($_SESSION['carrito'])) {
@@ -101,8 +105,8 @@ $mensaje = $_GET['mensaje'] ?? $mensaje;
     <div class="container">
         <h1>Carrito de Operaciones</h1>
         <nav>
-            <a href="index.php">Inicio</a>
-            <a href="logout.php">Cerrar Sesión</a>
+            <a href="index.php" style="text-decoration: none; color: blue;" >Inicio</a>
+            <a href="logout.php" style="text-decoration: none; color: blue;">Cerrar Sesión</a>
         </nav>
 
         <?php if ($mensaje): ?>
@@ -129,8 +133,8 @@ $mensaje = $_GET['mensaje'] ?? $mensaje;
             <label for="cantidad">Cantidad:</label>
             <input type="number" name="cantidad" id="cantidad" required>
             
-            <button type="submit" name="accion" value="agregar">Agregar</button>
-            <button type="submit" name="accion" value="modificar">Modificar</button>
+            <button type="submit" name="accion" value="agregar" style="margin: 5px">Agregar</button>
+            <button type="submit" name="accion" value="modificar" style="margin: 5px">Modificar</button>
         </form>
 
         <h2>Productos en el Carrito</h2>

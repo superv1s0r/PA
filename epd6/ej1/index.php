@@ -41,42 +41,42 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú Principal</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="./assets/indexStyles.css">
 </head>
 <body>
-<!-- Botón INICIO para volver al menú principal -->
-<a href="index.php" class="inicio-btn">INICIO</a>
+    <div class='container'>
 
+    <h1 style="font-size: 3rem">Aplicacion de Almacen</h1>
+<a href="index.php" class="inicio-btn">INICIO</a>
     <h1>Bienvenido <?php echo htmlspecialchars($_SESSION['usuario'] ?? $_COOKIE['ultimoUsuario']); ?></h1>
 
     <?php if ($rol_id == 1): ?>
         <div class="menu-options">
             <h2>Opciones Administrador</h2>
             <ul>
-                <li><a href="usuario.php">Gestionar Usuarios</a></li>
-                <li><a href="productos.php">Gestionar Productos</a></li>
+                <li><a href="./usuario.php">Gestionar Usuarios</a></li>
+                <li><a href="./productos.php">Gestionar Productos</a></li>
             </ul>
         </div>
     <?php elseif ($rol_id == 2): ?>
         <div class="menu-options">
             <h2>Opciones Administrativas</h2>
             <ul>
-                <li><a href="producto.php">Gestionar Productos</a></li>
+                <li><a href="./productos.php">Gestionar Productos</a></li>
             </ul>
         </div>
     <?php elseif ($rol_id == 3): ?>
         <div class="menu-options">
             <h2>Opciones Operario</h2>
             <ul>
-                <li><a href="producto.php">Gestionar Productos</a></li>
-                <li><a href="productos.php">Gestionar Productos</a></li>
+                <li><a href="./productos.php">Gestionar Productos</a></li>
 
             </ul>
         </div>
     <?php endif; ?>
 
     <a href="logout.php">Logout</a>
-
+    </div>
 <!-- Cookie de usuario -->
 <script>
     // Si no hay cookie, la creamos al cargar la página
