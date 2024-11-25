@@ -64,7 +64,6 @@ if ($accion === 'listar') {
 <body>
 <h1>Gestión de Usuarios</h1>
 
-<!-- Mostrar la vista según la acción -->
 <?php if ($accion === 'listar'): ?>
     <a href="usuarios.php?accion=listar" class="btn">Listar</a>
     <table border="1">
