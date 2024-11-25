@@ -3,52 +3,60 @@ session_start();
 require 'config.php';
 require 'utilidad.php';
 
+// Verificar sesión activa y rol
 if (!isset($_SESSION['rol'])) {
-    header("Location: login.php");
-    exit;
+    Helper::redirect("login.php");
 }
 
 $rol = $_SESSION['rol'];
 $idUsuarioActual = $_SESSION['id_usuario'];
-$accion = $_GET['accion'] ?? 'listar';
-$idUsuario = $_GET['id'] ?? null;
+
+// Sanitizar entradas GET
+$accion = Helper::sanitizeInput($_GET['accion'] ?? 'listar');
+$idUsuario = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT) : null;
+
 $pdo = Database::getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($accion === 'crear') {
+        // Sanitizar datos del formulario
         $datosUsuario = [
-            'nombre' => $_POST['nombre'],
-            'email' => $_POST['email'],
-            'password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
-            'id_rol' => $_POST['id_rol']
+            'nombre' => Helper::sanitizeInput($_POST['nombre']),
+            'email' => Helper::sanitizeInput($_POST['email']),
+            'password' => password_hash(Helper::sanitizeInput($_POST['password']), PASSWORD_BCRYPT),
+            'id_rol' => filter_var($_POST['id_rol'], FILTER_SANITIZE_NUMBER_INT)
         ];
+
+        // Crear usuario
         $resultado = Helper::crear($pdo, $rol, $datosUsuario);
         if ($resultado === true) {
-            header("Location: usuarios.php");
-            exit;
+            Helper::redirect("usuarios.php");
         } else {
             $error = $resultado;
         }
     } elseif ($accion === 'editar') {
+        // Sanitizar datos del formulario
         $nuevosDatos = [
-            'nombre' => $_POST['nombre'],
-            'email' => $_POST['email']
+            'nombre' => Helper::sanitizeInput($_POST['nombre']),
+            'email' => Helper::sanitizeInput($_POST['email'])
         ];
+
+        // Editar usuario
         $resultado = Helper::editar($pdo, $rol, $idUsuarioActual, $idUsuario, $nuevosDatos);
         if ($resultado === true) {
-            header("Location: usuarios.php");
-            exit;
+            Helper::redirect("usuarios.php");
         } else {
             $error = $resultado;
         }
     }
 } elseif ($accion === 'eliminar' && $idUsuario && $rol == 1) {
+    // Eliminar usuario
     Helper::eliminar($pdo, $idUsuario);
-    header("Location: usuarios.php");
-    exit;
+    Helper::redirect("usuarios.php");
 }
 
 if ($accion === 'listar') {
+    // Listar usuarios
     $usuarios = Helper::listarUsuarios($pdo, $rol, $idUsuarioActual);
 }
 ?>
@@ -65,7 +73,7 @@ if ($accion === 'listar') {
 <h1>Gestión de Usuarios</h1>
 
 <?php if ($accion === 'listar'): ?>
-    <a href="usuarios.php?accion=listar" class="btn">Listar</a>
+    <a href="usuarios.php?accion=crear" class="btn">Crear Usuario</a>
     <table border="1">
         <thead>
         <tr>
@@ -79,7 +87,7 @@ if ($accion === 'listar') {
         <tbody>
         <?php foreach ($usuarios as $usuario): ?>
             <tr>
-                <td><?php echo $usuario['id_usuario']; ?></td>
+                <td><?php echo htmlspecialchars($usuario['id_usuario']); ?></td>
                 <td><?php echo htmlspecialchars($usuario['nombre']); ?></td>
                 <td><?php echo htmlspecialchars($usuario['email']); ?></td>
                 <td>
@@ -126,7 +134,7 @@ if ($accion === 'listar') {
     </form>
 <?php elseif ($accion === 'editar'): ?>
     <h2>Editar Usuario</h2>
-    <form method="POST" action="usuarios.php?accion=editar&id=<?php echo $idUsuario; ?>">
+    <form method="POST" action="usuarios.php?accion=editar&id=<?php echo htmlspecialchars($idUsuario); ?>">
         <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($usuario['nombre']); ?>" required>
 
@@ -138,3 +146,4 @@ if ($accion === 'listar') {
 <?php endif; ?>
 </body>
 </html>
+
