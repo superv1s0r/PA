@@ -1,0 +1,56 @@
+<!-- Fuente: https://css-tricks.com/snippets/javascript/random-hex-color/ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Colores Aleatorios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.5s;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+        }
+        button {
+            margin-top: 20%;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="changeColor()">Generar Color Aleatorio</button>
+    <span style="padding-top: 30px;">
+        <span>Hex:</span>
+        <span id="hexColor"></span>
+    </span>
+    <script>
+        function getRandomColor() {
+            return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
+        }
+        
+        function changeColor() {
+            const randomColor = getRandomColor();
+            document.body.style.backgroundColor = randomColor;
+            document.getElementById('hexColor').innerText = randomColor; 
+        }
+
+
+    </script>
+
+
+
+
+</body>
+</html>
