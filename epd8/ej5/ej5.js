@@ -1,4 +1,3 @@
-// Array inicial de inventario
 let inventario = [
     { nombre: "PC", precio: 899.99, cantidad: 15 },
     { nombre: "Teléfono", precio: 299.99, cantidad: 25 },
@@ -12,7 +11,7 @@ let inventario = [
     { nombre: "Tarjeta Gráfica", precio: 599.99, cantidad: 10 }
 ];
 
-// Función para mostrar el inventario
+
 function mostrarInventario() {
     let mensaje = "Inventario Inicial:\n";
     inventario.forEach(producto => {
@@ -21,7 +20,7 @@ function mostrarInventario() {
     return mensaje;
 }
 
-// Función para agregar un nuevo producto
+
 function agregarProducto() {
     const nombre = prompt("Ingrese el nombre del nuevo producto:");
     const precio = parseFloat(prompt("Ingrese el precio del nuevo producto:"));
@@ -35,7 +34,7 @@ function agregarProducto() {
     }
 }
 
-// Función para actualizar inventario
+
 function actualizarInventario() {
     const nombre = prompt("Ingrese el nombre del producto a actualizar:");
     const producto = inventario.find(p => p.nombre === nombre);
@@ -53,7 +52,7 @@ function actualizarInventario() {
     }
 }
 
-// Función principal del menú
+
 function menuInventario() {
     while (true) {
         alert(mostrarInventario());
@@ -82,5 +81,5 @@ Opción:`);
     }
 }
 
-// Iniciar el menú
+
 menuInventario();
