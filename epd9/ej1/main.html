@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario con Validación</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <form id="registroForm" novalidate>
+        <h2>Formulario de Registro</h2>
+        <section class="form-group">
+            <article class="nombre">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre">
+                <div id="error-nombre" class="error"></div>
+            </article>
+            <article class="email">
+                <label for="email">Correo electrónico:</label>
+                <input type="email" id="email" name="email">
+                <div id="error-email" class="error"></div>
+            </article>
+            <article class="passwd">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password">
+                <div id="error-password" class="error"></div>
+            </article>
+        </section>
+        <button type="submit">Registrarse</button>
+    </form>
+
+    <script>
+        document.getElementById("registroForm").addEventListener("submit", function(event) {
+            document.getElementById("error-nombre").textContent = "";
+            document.getElementById("error-email").textContent = "";
+            document.getElementById("error-password").textContent = "";
+            
+            let valid = true;
+
+            const nombre = document.getElementById("nombre").value.trim();
+            if (nombre === "") {
+                document.getElementById("error-nombre").textContent = "El nombre no puede estar vacío.";
+                valid = false;
+            }
+
+            const email = document.getElementById("email").value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById("error-email").textContent = "Ingrese una dirección de correo válida.";
+                valid = false;
+            }
+
+            const password = document.getElementById("password").value.trim();
+            if (password.length < 8) {
+                document.getElementById("error-password").textContent = "La contraseña debe tener al menos 8 caracteres.";
+                valid = false;
+            }
+
+            if (!valid) {
+                event.preventDefault();
+                alert("Hay errores en el formulario. Por favor, corríjalos antes de enviar.");
+            }
+        });
+    </script>
+</body>
+</html>
