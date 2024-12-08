@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Juego del Cuadrado Mágico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        td {
+            width: 60px;
+            height: 60px;
+            border: 2px solid black;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            height: 100%;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        td.selected input {
+            background-color: red;
+            color: white;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>Juego del Cuadrado Mágico</h1>
+<p>Introduce números en la tabla. La suma de cada fila, columna y diagonal debe ser igual.</p>
+<table>
+    <tbody id="cuadrado-magico">
+    <tr>
+        <td><input type="number" ></td>
+        <td><input type="number" ></td>
+        <td><input type="number"></td>
+    </tr>
+    <tr>
+        <td><input type="number"></td>
+        <td><input type="number"></td>
+        <td><input type="number"></td>
+    </tr>
+    <tr>
+        <td><input type="number"></td>
+        <td><input type="number"></td>
+        <td><input type="number"></td>
+    </tr>
+    </tbody>
+</table>
+<button onclick="verifyCuadradoMagico()">Verificar</button>
+<p class="message" id="message"></p>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const table = document.querySelectorAll("#cuadrado-magico tr");
+        const centralCell = table[1].children[1];
+        centralCell.classList.add("selected");
+    });
+
+    const cells = document.querySelectorAll("#cuadrado-magico td");
+
+    cells.forEach(cell => {
+        cell.addEventListener("click", () => {
+            const currentlySelected = document.querySelector("td.selected");
+            if (currentlySelected) {
+                currentlySelected.classList.remove("selected");
+            }
+            cell.classList.add("selected");
+        });
+    });
+
+    document.addEventListener("keydown", (event) => {
+        const selectedCell = document.querySelector("td.selected input");
+        if (!selectedCell) return;
+
+        const key = event.key;
+        const keyCode = event.keyCode;
+
+        const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
+        if (allowedKeys.includes(key)) return;
+
+        if ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105)) {
+            displayMessage("", "");
+        } else {
+
+            event.preventDefault();
+            displayMessage("Sólo se aceptan números entre 0 y 9.", "error");
+        }
+    });
+
+    const inputs = document.querySelectorAll("#cuadrado-magico input");
+
+    inputs.forEach(input => {
+        input.addEventListener("input", () => {
+            // Limitar valores entre 0 y 9
+            const value = Number(input.value);
+            if (value < 0 || value > 9) {
+                input.value = "";
+                displayMessage("Sólo se aceptan números entre 0 y 9.", "error");
+            } else {
+                displayMessage("", "");
+            }
+        });
+
+        input.addEventListener("blur", () => {
+
+            const value = Number(input.value);
+            if (value < 0 || value > 9) {
+                input.value = "";
+                displayMessage("Sólo se aceptan números entre 0 y 9.", "error");
+            }
+        });
+
+        input.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+                const value = Number(input.value);
+                if (value < 0 || value >= 9) {
+                    event.preventDefault();
+                    displayMessage("Sólo se aceptan números entre 0 y 9.", "error");
+                } else {
+                    displayMessage("", "");
+                }
+            }
+        });
+    });
+    inputs.forEach(input => {
+        input.addEventListener("keyup", verifyAlTiempo);
+    });
+    function verifyAlTiempo() {
+        const table = document.querySelectorAll("#cuadrado-magico input");
+        const values = Array.from(table).map(input => Number(input.value));
+        const cells = document.querySelectorAll("#cuadrado-magico td");
+
+        let hasEmptyCells = false;
+
+        cells.forEach((cell, index) => {
+            if (!values[index]) {
+                cell.querySelector("input").style.backgroundColor = "#FFC0CB"; // Color rosa claro para celdas vacías
+                hasEmptyCells = true;
+            } else {
+                cell.querySelector("input").style.backgroundColor = ""; // Restaurar color si la celda tiene valor
+            }
+        });
+
+        // Si faltan celdas por completar, mostrar mensaje de error
+        if (hasEmptyCells) {
+            displayMessage("Completa todas las celdas.", "error");
+            return;
+        }
+
+        // Si todas las celdas están completas, comprobar si es un cuadrado mágico
+        verifyCuadradoMagico(values);
+    }
+    function verifyCuadradoMagico() {
+        const table = document.querySelectorAll("#cuadrado-magico input");
+        const values = Array.from(table).map(input => Number(input.value));
+
+        if (values.includes(0) || values.some(isNaN)) {
+            displayMessage("Por favor, completa todos los campos.", "error");
+            return;
+        }
+
+        const sums = [];
+        for (let i = 0; i < 3; i++) {
+            sums.push(values[i * 3] + values[i * 3 + 1] + values[i * 3 + 2]);
+            sums.push(values[i] + values[i + 3] + values[i + 6]);
+        }
+        sums.push(values[0] + values[4] + values[8]);
+        sums.push(values[2] + values[4] + values[6]);
+
+        const allEqual = sums.every(sum => sum === sums[0]);
+        if (allEqual) {
+            cells.forEach(cell => {
+                cell.querySelector("input").style.backgroundColor = "gold"; // Cambiar color a dorado
+            });
+            displayMessage("¡Felicidades! Has logrado un cuadrado mágico.", "success");
+
+        } else {
+            displayMessage("No es un cuadrado mágico. Intenta de nuevo.", "error");
+        }
+    }
+
+    function displayMessage(message, type) {
+        const messageElement = document.getElementById("message");
+        messageElement.textContent = message;
+        messageElement.className = `message ${type}`;
+    }
+</script>
+</body>
+</html>
