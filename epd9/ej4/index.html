@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>EPD 9 - Ej4</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        #colorMostrado {
+            width: 250px;
+            height: 250px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        #opciones {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+        #opciones li {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #opciones li:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            min-height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>¡Adivina el color!</h1>
+    <h3>EPD 9 - Ejercicio 4</h2>
+    
+    <div id="colorMostrado"></div>
+    
+    <ul id="opciones"></ul>
+    
+    <div id="resultado"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
