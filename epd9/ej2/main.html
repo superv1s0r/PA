@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego de Adivinar el Número</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #game-container {
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      width: 300px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column; 
+      justify-content: center;
+    }
+    input {
+      width: 50px;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+    }
+    #message {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    #timer {
+      font-size: 1.2em;
+      color: red;
+    }
+    button {
+        color: white;
+        background-color:  #eaa28a ;
+        border: 1px solid white;
+        border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <h1>¡Adivina el Número!</h1>
+    <button id="start-game">Iniciar Juego</button>
+    <div id="game" style="display: none;">
+      <p>Ingresa un número entre 1 y 10:</p>
+      <input type="number" id="guess-input" min="1" max="10">
+      <button id="check-guess" disabled>Comprobar</button>
+      <p>Tiempo restante: <span id="timer">10</span> segundos</p>
+    </div>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    let randomNumber; 
+    let timeLeft = 10;
+    let timerInterval;
+    let timeoutHandle;
+
+    const startGameButton = document.getElementById('start-game');
+    const gameContainer = document.getElementById('game');
+    const guessInput = document.getElementById('guess-input');
+    const checkGuessButton = document.getElementById('check-guess');
+    const timerDisplay = document.getElementById('timer');
+    const messageDisplay = document.getElementById('message');
+
+    // Habilita/deshabilita el botón según el input
+    guessInput.addEventListener('input', () => {
+      checkGuessButton.disabled = !guessInput.value || guessInput.value < 1 || guessInput.value > 10;
+    });
+
+    // Iniciar juego
+    startGameButton.addEventListener('click', () => {
+      // Reinicia el juego
+      resetGame();
+      randomNumber = Math.floor(Math.random() * 10) + 1;
+      console.log("Número generado (para pruebas):", randomNumber); 
+      gameContainer.style.display = 'block';
+      startGameButton.style.display = 'none';
+
+      // Inicia el temporizador
+      timerInterval = setInterval(updateTimer, 1000);
+      timeoutHandle = setTimeout(outOfTime, 10000);
+    });
+
+    // Comprueba la adivinanza del jugador
+    checkGuessButton.addEventListener('click', () => {
+      const userGuess = parseInt(guessInput.value, 10);
+      if (userGuess === randomNumber) {
+        showMessage("¡Felicidades! Adivinaste el número.", "green");
+        endGame();
+      } else {
+        showMessage("Número incorrecto. ¡Inténtalo de nuevo!", "orange");
+      }
+    });
+
+    // Actualiza el temporizador cada segundo
+    function updateTimer() {
+      timeLeft--;
+      timerDisplay.textContent = timeLeft;
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+      }
+    }
+
+    // Muestra el mensaje de tiempo agotado
+    function outOfTime() {
+      showMessage("¡Tiempo Agotado! El número era " + randomNumber, "red");
+      endGame();
+    }
+
+    // Finaliza el juego
+    function endGame() {
+      clearInterval(timerInterval);
+      clearTimeout(timeoutHandle);
+      checkGuessButton.disabled = true;
+      guessInput.disabled = true;
+      startGameButton.style.display = 'block';
+      startGameButton.textContent = "Reiniciar Juego";
+    }
+
+    // Reinicia el juego
+    function resetGame() {
+      timeLeft = 10;
+      timerDisplay.textContent = timeLeft;
+      messageDisplay.textContent = '';
+      guessInput.value = '';
+      guessInput.disabled = false;
+      checkGuessButton.disabled = true;
+    }
+
+    // Muestra un mensaje
+    function showMessage(message, color) {
+      messageDisplay.textContent = message;
+      messageDisplay.style.color = color;
+    }
+  </script>
+</body>
+</html>
+
