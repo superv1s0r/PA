@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juego de Encuentra la pareja con jQuery</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    #tablero {
+        display: grid;
+        grid-template-columns: repeat(4, 150px);
+        grid-gap: 10px;
+        justify-content: center;
+    }
+    .carta {
+        width: 150px;
+        height: 150px;
+        position: relative;
+        cursor: pointer;
+        transform: scale(1);
+        transition: transform 0.2s;
+    }
+    .carta:hover {
+        transform: scale(1.1);
+    }
+    .carta img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        backface-visibility: hidden;
+        transition: transform 0.5s;
+    }
+    .dorso {
+        transform: rotateY(0deg);
+        background-color: #CCCCCC;
+    }
+    .frontal {
+        transform: rotateY(180deg);
+    }
+    .abierta .dorso {
+        transform: rotateY(180deg);
+    }
+    .abierta .frontal {
+        transform: rotateY(0deg);
+    }
+</style>
+</head>
+<body>
+<h1>Juego de Encuentra la pareja</h1>
+<div id="tablero"></div>
+<p>Movimientos: <span id="contadorMovimientos">0</span></p>
+<p id="mensaje"></p>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+$(document).ready(function() {
+    const imagenes = [
+        "https://via.placeholder.com/150/FF0000", 
+        "https://via.placeholder.com/150/00FF00", 
+        "https://via.placeholder.com/150/0000FF", 
+        "https://via.placeholder.com/150/FFFF00", 
+        "https://via.placeholder.com/150/FF00FF", 
+        "https://via.placeholder.com/150/00FFFF"
+    ];
+
+    let cartas = [];
+    let cartasAbiertas = [];
+    let movimientos = 0;
+
+    function iniciarJuego() {
+        cartas = [...imagenes, ...imagenes];
+        mezclarCartas();
+        mostrarTablero();
+    }
+
+    function mezclarCartas() {
+        cartas.sort(() => 0.5 - Math.random());
+    }
+
+    function mostrarTablero() {
+        const tablero = $('#tablero');
+        tablero.empty();
+        cartas.forEach((imagen, index) => {
+            const carta = $(`
+                <div class="carta" data-imagen="${imagen}" data-index="${index}">
+                    <img src="${imagen}" class="frontal">
+                    <img src="https://via.placeholder.com/150/CCCCCC" class="dorso">
+                </div>
+            `);
+            carta.on('click', abrirCarta);
+            tablero.append(carta);
+        });
+    }
+
+    function abrirCarta() {
+        const carta = $(this);
+        if (carta.hasClass('abierta') || cartasAbiertas.length >= 2) return;
+
+        carta.addClass('abierta');
+        cartasAbiertas.push(carta);
+
+        if (cartasAbiertas.length === 2) {
+            actualizarContadorMovimientos();
+            setTimeout(verificarPareja, 1000);
+        }
+    }
+
+    function verificarPareja() {
+        const [carta1, carta2] = cartasAbiertas;
+        const imagen1 = carta1.data('imagen');
+        const imagen2 = carta2.data('imagen');
+
+        if (imagen1 === imagen2) {
+            cartasAbiertas = [];
+            if ($('.carta.abierta').length === cartas.length) {
+                mostrarMensaje("¡Has encontrado todas las parejas!");
+            }
+        } else {
+            cerrarCartas();
+        }
+    }
+
+    function cerrarCartas() {
+        cartasAbiertas.forEach(carta => carta.removeClass('abierta'));
+        cartasAbiertas = [];
+    }
+
+    function mostrarMensaje(mensaje) {
+        $('#mensaje').text(mensaje);
+    }
+
+    function actualizarContadorMovimientos() {
+        movimientos++;
+        $('#contadorMovimientos').text(movimientos);
+    }
+
+    iniciarJuego();
+});
+</script>
+</body>
+</html>
