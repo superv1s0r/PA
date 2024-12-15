@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Focus Plugin</title>
+    <link rel="stylesheet" href="estilo.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="AccessibleFocus.js"></script>
+</head>
+<body>
+<a href="#" class="accessible-item">Enlace 1</a>
+<button class="accessible-item">Botón</button>
+<input type="text" class="accessible-item" placeholder="Escribe algo">
+<a href="#" class="accessible-item">Enlace 2</a>
+<button>Otro Botón</button>
+
+<script>
+
+    $(document).ready(function() {
+        $("body").AccessibleFocus();
+    });
+
+</script>
+
+</body>
+</html>

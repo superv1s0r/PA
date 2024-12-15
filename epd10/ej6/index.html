@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <title>Gestor de tareas</title>
+</head>
+<body>
+<h1>Gestor de tareas</h1>
+<form id="formTarea">
+    <input type="text" id="inputTarea" placeholder="Escribe tu tarea">
+    <button type="submit" id="agregarBtn" disabled>Agregar Tarea</button>
+</form>
+<ul id="listaTareas"></ul>
+<button id="vaciar">Vaciar Todas las Tareas</button>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const formTarea = document.getElementById("formTarea");
+        const inputTarea = document.getElementById("inputTarea");
+        const agregarBtn = document.getElementById("agregarBtn");
+        const listaTareas = document.getElementById("listaTareas");
+        const vaciarBtn = document.getElementById("vaciar");
+
+        inputTarea.addEventListener("input", () => {
+            agregarBtn.disabled = inputTarea.value.trim() === "";
+        });
+
+        formTarea.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const descripcion = inputTarea.value.trim();
+            if (descripcion) {
+                const tarea = document.createElement("li");
+                tarea.classList.add("tarea");
+
+                const descripcionTarea = document.createElement("span");
+                descripcionTarea.textContent = descripcion;
+
+                const completarBtn = document.createElement("button");
+                completarBtn.textContent = "Completar";
+                completarBtn.classList.add("completar");
+                completarBtn.addEventListener("click", () => {
+                    tarea.classList.toggle("completada");
+                });
+
+                const eliminarBtn = document.createElement("button");
+                eliminarBtn.textContent = "Eliminar";
+                eliminarBtn.classList.add("eliminar");
+                eliminarBtn.addEventListener("click", () => {
+                    tarea.remove();
+                });
+
+                tarea.appendChild(descripcionTarea);
+                tarea.appendChild(completarBtn);
+                tarea.appendChild(eliminarBtn);
+                listaTareas.appendChild(tarea);
+
+                inputTarea.value = "";
+                agregarBtn.disabled = true;
+            }
+        });
+
+        vaciarBtn.addEventListener("click", () => {
+            while (listaTareas.firstChild) {
+                listaTareas.firstChild.remove();
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: auto;
+}
+.tarea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+.tarea.completada {
+    text-decoration: line-through;
+    background-color: #d4edda;
+}
+button {
+    margin-left: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+button.eliminar {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+button.completar {
+    background-color: #d4edda;
+    color: #155724;
+}
+#vaciar {
+    margin-top: 10px;
+    background-color: #f5c6cb;
+    color: #721c24;
+    display: block;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+}
