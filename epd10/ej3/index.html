@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Carga de Imágenes</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Plugin LazyLoad -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+</head>
+<body>
+    <h1>Comparación de Métodos de Carga de Imágenes</h1>
+
+    <h2>Carga Normal</h2>
+    <div id="imagenes-normales">
+        <img src="images/imagen1.jpg" alt="Imagen 1">
+        <img src="images/imagen2.jpg" alt="Imagen 2">
+        <img src="images/imagen3.jpg" alt="Imagen 3">
+        <img src="images/imagen4.jpg" alt="Imagen 4">
+        <img src="images/imagen5.jpg" alt="Imagen 5">
+    </div>
+
+    <h2>Lazy Load con jQuery</h2>
+    <div id="imagenes-lazyload">
+        <img class="lazy" data-original="images/imagen1.jpg" alt="Imagen 1 Lazy">
+        <img class="lazy" data-original="images/imagen2.jpg" alt="Imagen 2 Lazy">
+        <img class="lazy" data-original="images/imagen3.jpg" alt="Imagen 3 Lazy">
+        <img class="lazy" data-original="images/imagen4.jpg" alt="Imagen 4 Lazy">
+        <img class="lazy" data-original="images/imagen5.jpg" alt="Imagen 5 Lazy">
+    </div>
+
+    <h2>Lazy Load HTML5</h2>
+    <div id="imagenes-html5">
+        <img src="images/imagen1.jpg" loading="lazy" alt="Imagen 1 HTML5">
+        <img src="images/imagen2.jpg" loading="lazy" alt="Imagen 2 HTML5">
+        <img src="images/imagen3.jpg" loading="lazy" alt="Imagen 3 HTML5">
+        <img src="images/imagen4.jpg" loading="lazy" alt="Imagen 4 HTML5">
+        <img src="images/imagen5.jpg" loading="lazy" alt="Imagen 5 HTML5">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
