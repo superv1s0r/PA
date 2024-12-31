@@ -5,17 +5,18 @@ class Helper
     public static function getConn() {
         $servername = "localhost";
         $username = "root";
-        $pass = "";
+        $pass = "1748";
         $dbname = "salud";
 
         return mysqli_connect($servername, $username, $pass, $dbname);
-        ;
+
     }
     public static function dirigir($url)
     {
         header("Location: $url");
         exit();
     }
+
 
     public static function isEmpty($fields)
     {
