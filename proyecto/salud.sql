@@ -20,8 +20,12 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `salud`
 --
-
 -- --------------------------------------------------------
+
+CREATE DATABASE IF NOT EXISTS `salud`;
+USE `salud`;
+
+
 
 --
 -- Estructura de tabla para la tabla `rol`
