@@ -30,13 +30,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $usuario_db = mysqli_fetch_assoc($check_result);
 
         if (password_verify($contrasenya, $usuario_db['password'])) {
-            echo "Logeado correctamente";
+            //echo "Logeado correctamente";
 
             $_SESSION['valid'] = true;
             $_SESSION['username'] = $usuario;
 
             Helper::dirigir('menu.php');
-            exit();
+            //exit();
          } else {
 
                 $errores[] = "Contraseña incorrecta.";
