@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+body{
+    background-color: #c9d6ff;
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+}
+
+h1{
+    margin-top: 10px;
+    text-align: center;
+}
+.space1 {
+
+    width: 39%;
+    float: left;
+    height: 100px;
+
+
+}
+
+.space2 {
+
+    height: 100px;
+    width: 39%;
+    float: left;
+
+}
+.login-container {
+    margin-top: 120px;
+    background-color: #fff;
+    float: left;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    position: relative;
+    width: 20%;
+    height: 300px;
+    max-width: 100%;
+    min-width: 220px;
+}
+
+.login-container span {
+    font-size: 15px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+.login-container a{
+
+    color: #333;
+    text-decoration: none;
+
+}
+
+.login-container form {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: centers;
+    flex-direction: column;
+    height: 100%;
+    padding: 0 40px;
+
+}
+.login-container input[type="submit"] {
+    padding: 10px 45px;
+    font-size: 12px;
+    background-color: #28a745;
+    border: 1px solid transparent;
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.login-container input[type="submit"]:hover {
+
+    border-color:#dd2a7b;
+
+}
+.login-container input{
+
+    background-color: #eee;
+    border: none;
+    margin: 8px;
+    padding: 10px 15px;
+    outline: none;
+    width: 100%;
+    border-radius: 10px;
+
+}
+
+.icons-account {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.icons-account a{
+
+    border: 1px solid #ccc;
+    border-radius: 20%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 3px;
+    width: 40px;
+    height: 40px;
+
+}
+
+.icons-account a:hover {
+
+    border-image: linear-gradient(to right, #515bd4, #8134af, #dd2a7b, #feda77, #f58529) 1;
+
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+
+}

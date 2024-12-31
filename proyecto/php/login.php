@@ -69,25 +69,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Sistema de notas</title>
-    <link rel="stylesheet" href="plantilla.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
 </head>
 <body>
 <h1>Iniciar sesi&oacute;n</h1>
+<div class="space1"></div>
 
-<div class="contenedor">
+<div class="login-container">
+    <div class="icons-account">
+        <a href="#" class="icons"><i class="fa-brands fa-google-plus-g"></i></a>
+        <a href="#" class="icons"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" class="icons"><i class="fa-brands fa-github"></i></a>
+        <a href="#" class="icons"><i class="fa-brands fa-apple"></i></a>
+
+    </div>
+
+    <span>O usa una cuenta ya existente</span>
     <form action="login.php" method="post">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
-        <br>
-        <br>
-        <label for="password">Contrase&ntilde;a:</label>
-        <input type="password" id="password" name="password">
-        <br>
-        <br>
-        <input type="submit" value="Acceder">
-        <br>
+        <input type="email" id="email" name="email" placeholder="email" >
+        <input type="password" id="password" name="password" placeholder="password" >
+        <input type="submit" value="Aceeder">
+        <a href="signup.php"> Registrar una cuenta</a>
     </form>
 </div>
+
+<div class="space2"></div>
 
 </body>
 </html>
