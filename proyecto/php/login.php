@@ -3,7 +3,6 @@
 require 'utilidad.php';
 session_start();
 
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $errores = [];
     $usuario = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
@@ -12,42 +11,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $usuario)) {
         $errores[] = "El campo de email no cumple el requisito.";
     }
+
     $fields = ['email', 'password'];
-    $errores = Helper::isEmpty($fields);
+    $errores = array_merge($errores, Helper::isEmpty($fields));
 
     $conn = Helper::getConn();
 
     if (!$conn) {
-        echo "Fallo al conectar a MySQL: " . mysqli_connect_error();
-        exit();
+        die("Fallo al conectar a MySQL: " . mysqli_connect_error());
     }
 
-    $query = "SELECT * FROM usuario WHERE email = '$usuario'";
-    $check_result = mysqli_query($conn, $query);
+    $query = "SELECT * FROM usuario WHERE email = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $usuario);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if (mysqli_num_rows($check_result) > 0) {
-
-        $usuario_db = mysqli_fetch_assoc($check_result);
+    if ($result->num_rows > 0) {
+        $usuario_db = $result->fetch_assoc();
 
         if (password_verify($contrasenya, $usuario_db['password'])) {
-            //echo "Logeado correctamente";
-
             $_SESSION['valid'] = true;
             $_SESSION['username'] = $usuario;
-
             Helper::dirigir('menu.php');
-            //exit();
-         } else {
-
-                $errores[] = "Contraseña incorrecta.";
+        } else {
+            $errores[] = "Contraseña incorrecta.";
         }
     } else {
-
-
-            $errores[] = "No se encuentra el usuario.";
-
-
+        $errores[] = "No se encuentra el usuario.";
     }
+
     if (!empty($errores)) {
         echo '<p style="color:red">Errores cometidos:</p>';
         echo '<ul style="color:red">';
@@ -55,47 +48,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo "<li>$e</li>";
         }
         echo '</ul>';
-
     }
-
 }
-
 
 ?>
 
 <!DOCTYPE html>
-
 <html>
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
     <title>Sistema de notas</title>
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
 </head>
+
 <body>
-<h1>Iniciar sesi&oacute;n</h1>
-<div class="space1"></div>
+    <header>
+        <h1>Iniciar sesión</h1>
+    </header>
+    <section class="login-container">
+        <article class="icons-account">
+            <a href="#" class="icons"><i class="fa-brands fa-google-plus-g"></i></a>
+            <a href="#" class="icons"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="icons"><i class="fa-brands fa-github"></i></a>
+            <a href="#" class="icons"><i class="fa-brands fa-apple"></i></a>
+        </article>
 
-<div class="login-container">
-    <div class="icons-account">
-        <a href="#" class="icons"><i class="fa-brands fa-google-plus-g"></i></a>
-        <a href="#" class="icons"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="#" class="icons"><i class="fa-brands fa-github"></i></a>
-        <a href="#" class="icons"><i class="fa-brands fa-apple"></i></a>
-
-    </div>
-
-    <span>O usa una cuenta ya existente</span>
-    <form action="login.php" method="post">
-        <input type="email" id="email" name="email" placeholder="email" >
-        <input type="password" id="password" name="password" placeholder="password" >
-        <input type="submit" value="Aceeder">
-        <a href="signup.php"> Registrar una cuenta</a>
-    </form>
-</div>
-
-<div class="space2"></div>
-
+        <p> O usa una cuenta ya existente</p>
+        <form action="login.php" method="post">
+            <input type="email" id="email" name="email" placeholder="Email">
+            <input type="password" id="password" name="password" placeholder="Contraseña">
+            <input type="submit" value="Acceder">
+            <a href="signup.php">Registrar una cuenta</a>
+        </form>
+    </section>
 </body>
+
 </html>

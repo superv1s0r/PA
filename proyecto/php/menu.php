@@ -2,16 +2,18 @@
 session_start();
 if (!isset($_SESSION['valid']) || $_SESSION['valid'] !== true) {
     $_SESSION['error'] = "Por favor, inicia sesión para continuar.";
-    header("Location: login.php");
-    exit();
+    Helper::dirigir('login.php');    
 }
 
 $conn = Helper::getConn();
-$query = "SELECT * FROM `Pacientes`";
-$result = mysqli_query($conn, $query);
+$query = "SELECT * FROM usuario WHERE email = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $_SESSION['username']);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if (!$result) {
-    die("Error en la consulta SQL: " . mysqli_error($conn));
+    die("Error en la consulta SQL: " . $conn->error);
 }
 ?>
 
@@ -27,14 +29,14 @@ if (!$result) {
 </head>
 
 <body>
-    <div class="nav">
-        <a href="logout.php">Cerrar sesión</a>
-    </div>
-
-    <div class="gestion-container">
+    <header>
+        <nav>
+            <a href="logout.php">Cerrar sesión</a>
+        </nav>
+    </header>
+    <section class="gestion-container">
         <h2>Gestión de Pacientes</h2>
         <button onclick="window.location.href='crear_paciente.php'">Crear Paciente</button>
-
         <table>
             <thead>
                 <tr>
@@ -45,20 +47,21 @@ if (!$result) {
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                <?php while ($row = $result->fetch_assoc()) { ?>
                     <tr>
-                        <td><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['nombre']; ?></td>
-                        <td><?php echo $row['edad']; ?></td>
+                        <td><?php echo htmlspecialchars($row['id']); ?></td>
+                        <td><?php echo htmlspecialchars($row['nombre']); ?></td>
+                        <td><?php echo htmlspecialchars($row['edad']); ?></td>
                         <td>
-                            <a href="editarPaciente.php?id=<?php echo $row['id']; ?>">Editar</a>
-                            <a href="eliminarPaciente.php?id=<?php echo $row['id']; ?>">Eliminar</a>
+                            <a href="añadirPaciente.php?id=<?php echo urlencode($row['id']); ?>">Añadir</a>
+                            <a href="editarPaciente.php?id=<?php echo urlencode($row['id']); ?>">Editar</a>
+                            <a href="eliminarPaciente.php?id=<?php echo urlencode($row['id']); ?>">Eliminar</a>
                         </td>
                     </tr>
                 <?php } ?>
             </tbody>
         </table>
-    </div>
+    </section>
 </body>
 
 </html>
