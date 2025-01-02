@@ -2,7 +2,7 @@
 session_start();
 if (!isset($_SESSION['valid']) || $_SESSION['valid'] !== true) {
     $_SESSION['error'] = "Por favor, inicia sesión para continuar.";
-    Helper::dirigir('login.php');    
+    Helper::redirect('login.php');    
 }
 
 $conn = Helper::getConn();

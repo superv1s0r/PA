@@ -5,7 +5,7 @@ session_start();
 
 if (!isset($_SESSION['valid']) || $_SESSION['valid'] !== true) {
     $_SESSION['error'] = "Por favor, inicia sesión para continuar.";
-    Helper::dirigir('login.php');
+    Helper::redirect('login.php');
 }
 
 $conn = Helper::getConn();
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $stmt->close();
 } else {
-    Helper::dirigir('menu.php');
+    Helper::redirect('menu.php');
 }
 $conn->close();
 ?>

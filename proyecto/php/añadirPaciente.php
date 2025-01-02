@@ -5,7 +5,7 @@ session_start();
 
 if (!isset($_SESSION['valid']) || $_SESSION['valid'] !== true) {
     $_SESSION['error'] = "Por favor, inicia sesión para continuar.";
-    Helper::dirigir('login.php');
+    Helper::redirect('login.php');
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $result = mysqli_query($conn, $query);
 
         if (!$result) {
-            Helper::dirigir('login.php');
+            Helper::redirect('login.php');
         } else {
             echo "Error al agregar el paciente: " . $conn->error;
         }
