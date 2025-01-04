@@ -1,6 +1,6 @@
 <?php
 
-require_once 'crud/crudCitas.php';
+require_once '../crud/crudCitas.php';
 require_once 'seguridad.php';
 require_once 'utilidad.php';
 

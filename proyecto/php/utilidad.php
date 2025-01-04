@@ -5,7 +5,7 @@ class Helper
     public static function getConn(): mysqli | bool{
         $servername = "localhost";
         $username = "root";
-        $pass = "1748";
+        $pass = "";
         $dbname = "salud";
 
         return mysqli_connect($servername, $username, $pass, $dbname);

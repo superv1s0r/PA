@@ -1,5 +1,5 @@
 <?php
-
+include 'utilidad.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Fallo al conectar a MySQL: " . mysqli_connect_error());
     }
 
-    $query = "SELECT * FROM usuario WHERE email = ?";
+    $query = "SELECT * FROM pacientes WHERE email = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $usuario);
     $stmt->execute();
