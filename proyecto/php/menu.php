@@ -3,7 +3,7 @@ session_start();
 include 'seguridad.php';
 
 $conn = Helper::getConn();
-$query = "SELECT * FROM pacientes WHERE email = ?";
+$query = "SELECT * FROM citas WHERE email = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("s", $_SESSION['username']);
 $stmt->execute();
@@ -33,26 +33,29 @@ if (!$result) {
     </header>
     <section class="gestion-container">
         <h2>Gestión de Pacientes</h2>
-        <button onclick="window.location.href='crear_paciente.php'">Crear Paciente</button>
+        <button onclick="window.location.href='crearCita.php'">Crear Cita</button>
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Edad</th>
-                    <th>Acciones</th>
+                    <th>ID Paciente</th>
+                    <th>Fecha Cita</th>
+                    <th>Motivo</th>
+                    <th>Estado</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = $result->fetch_assoc()) { ?>
                     <tr>
                         <td><?php echo htmlspecialchars($row['id']); ?></td>
-                        <td><?php echo htmlspecialchars($row['nombre']); ?></td>
-                        <td><?php echo htmlspecialchars($row['edad']); ?></td>
+                        <td><?php echo htmlspecialchars($row['id_paciente']); ?></td>
+                        <td><?php echo htmlspecialchars($row['fecha_cita']); ?></td>
+                        <td><?php echo htmlspecialchars($row['motivo']); ?></td>
+                        <td><?php echo htmlspecialchars($row['estado']); ?></td>
                         <td>
-                            <a href="añadirPaciente.php?id=<?php echo urlencode($row['id']); ?>">Añadir</a>
-                            <a href="editarPaciente.php?id=<?php echo urlencode($row['id']); ?>">Editar</a>
-                            <a href="eliminarPaciente.php?id=<?php echo urlencode($row['id']); ?>">Eliminar</a>
+                            <a href="añadirCita.php?id=<?php echo urlencode($row['id']); ?>">Añadir</a>
+                            <a href="editarCita.php?id=<?php echo urlencode($row['id']); ?>">Editar</a>
+                            <a href="eliminarCita.php?id=<?php echo urlencode($row['id']); ?>">Eliminar</a>
                         </td>
                     </tr>
                 <?php } ?>
