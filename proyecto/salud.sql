@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 04, 2025 at 05:58 PM
+-- Generation Time: Jan 04, 2025 at 06:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -22,6 +22,20 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `salud` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `salud`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Citas`
+--
+
+CREATE TABLE `Citas` (
+  `id` int(11) NOT NULL,
+  `id_paciente` int(11) DEFAULT NULL,
+  `fecha_cita` datetime DEFAULT NULL,
+  `motivo` varchar(255) DEFAULT NULL,
+  `estado` enum('Programada','Cancelada','Completada') DEFAULT 'Programada'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -56,6 +70,13 @@ INSERT INTO `Pacientes` (`id`, `nombre`, `password`, `edad`, `genero`, `fecha_re
 --
 
 --
+-- Indexes for table `Citas`
+--
+ALTER TABLE `Citas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_paciente` (`id_paciente`);
+
+--
 -- Indexes for table `Pacientes`
 --
 ALTER TABLE `Pacientes`
@@ -66,10 +87,26 @@ ALTER TABLE `Pacientes`
 --
 
 --
+-- AUTO_INCREMENT for table `Citas`
+--
+ALTER TABLE `Citas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `Pacientes`
 --
 ALTER TABLE `Pacientes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `Citas`
+--
+ALTER TABLE `Citas`
+  ADD CONSTRAINT `Citas_ibfk_1` FOREIGN KEY (`id_paciente`) REFERENCES `Pacientes` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
