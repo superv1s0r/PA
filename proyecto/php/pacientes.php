@@ -3,9 +3,8 @@ session_start();
 include 'seguridad.php';
 
 $conn = Helper::getConn();
-$query = "SELECT * FROM citas WHERE email = ?";
+$query = "SELECT * FROM pacientes";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("s", $_SESSION['username']);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -33,29 +32,35 @@ if (!$result) {
     </header>
     <section class="gestion-container">
         <h2>Gestión de Pacientes</h2>
-        <button onclick="window.location.href='crearCita.php'">Crear Cita</button>
+        <button onclick="window.location.href='añadirPaciente.php'">Crear Paciente</button>
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>ID Paciente</th>
-                    <th>Fecha Cita</th>
-                    <th>Motivo</th>
-                    <th>Estado</th>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Género</th>
+                    <th>Fecha Registro</th>
+                    <th>Teléfono</th>
+                    <th>Email</th>
+                    <th>Dirección</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = $result->fetch_assoc()) { ?>
                     <tr>
                         <td><?php echo htmlspecialchars($row['id']); ?></td>
-                        <td><?php echo htmlspecialchars($row['id_paciente']); ?></td>
-                        <td><?php echo htmlspecialchars($row['fecha_cita']); ?></td>
-                        <td><?php echo htmlspecialchars($row['motivo']); ?></td>
-                        <td><?php echo htmlspecialchars($row['estado']); ?></td>
+                        <td><?php echo htmlspecialchars($row['nombre']); ?></td>
+                        <td><?php echo htmlspecialchars($row['edad']); ?></td>
+                        <td><?php echo htmlspecialchars($row['genero']); ?></td>
+                        <td><?php echo htmlspecialchars($row['fecha_registro']); ?></td>
+                        <td><?php echo htmlspecialchars($row['telefono']); ?></td>
+                        <td><?php echo htmlspecialchars($row['email']); ?></td>
+                        <td><?php echo htmlspecialchars($row['direccion']); ?></td>
                         <td>
-                            <a href="añadirCita.php?id=<?php echo urlencode($row['id']); ?>">Añadir</a>
-                            <a href="editarCita.php?id=<?php echo urlencode($row['id']); ?>">Editar</a>
-                            <a href="eliminarCita.php?id=<?php echo urlencode($row['id']); ?>">Eliminar</a>
+                            <a href="editarPaciente.php?id=<?php echo urlencode($row['id']); ?>">Editar</a>
+                            <a href="eliminarPaciente.php?id=<?php echo urlencode($row['id']); ?>">Eliminar</a>
                         </td>
                     </tr>
                 <?php } ?>
