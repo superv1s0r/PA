@@ -2,11 +2,7 @@
 
 require 'utilidad.php';
 session_start();
-
-if (!isset($_SESSION['valid']) || $_SESSION['valid'] !== true) {
-    $_SESSION['error'] = "Por favor, inicia sesión para continuar.";
-    Helper::redirect('login.php');
-}
+include 'seguridad.php';
 
 $conn = Helper::getConn();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

@@ -1,12 +1,6 @@
 <?php
-require 'utilidad.php';
+include 'seguridad.php';
 session_start();
-
-if (!isset($_SESSION['valid']) || $_SESSION['valid'] !== true) {
-    $_SESSION['error'] = "Por favor, inicia sesión para continuar.";
-    header("Location: login.php");
-    exit();
-}
 
 $conn = Helper::getConn();
 

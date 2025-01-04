@@ -1,12 +1,9 @@
 <?php
 session_start();
-if (!isset($_SESSION['valid']) || $_SESSION['valid'] !== true) {
-    $_SESSION['error'] = "Por favor, inicia sesión para continuar.";
-    Helper::redirect('login.php');    
-}
+include 'seguridad.php';
 
 $conn = Helper::getConn();
-$query = "SELECT * FROM usuario WHERE email = ?";
+$query = "SELECT * FROM pacientes WHERE email = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("s", $_SESSION['username']);
 $stmt->execute();
