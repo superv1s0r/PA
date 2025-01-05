@@ -103,6 +103,38 @@ section.gestion-container {
     justify-content: center;
 }
 
+/* Estilo para el contenedor principal del menú */
+section.menu-container {
+    margin: 100px auto;
+    background-color: #fff;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    padding: 40px 20px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+/* Botones del menú */
+.menu-buttons button {
+    width: 80%;
+    margin: 10px auto;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-buttons button:hover {
+    background-color: #45a049;
+}
+
+
 table {
     width: 100%;
     border-collapse: collapse;
