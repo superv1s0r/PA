@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $usuario_db = $result->fetch_assoc();
 
         if (password_verify($contrasenya, $usuario_db['password'])) {
-            $_SESSION['valid'] = true;
+            $_SESSION['logged_in'] = true;
             $_SESSION['username'] = $usuario;
             Helper::redirect('pacientes.php');
         } else {
