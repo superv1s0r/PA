@@ -60,10 +60,10 @@ CREATE TABLE `Pacientes` (
 --
 
 INSERT INTO `Pacientes` (`id`, `nombre`, `password`, `edad`, `genero`, `fecha_registro`, `telefono`, `email`, `direccion`) VALUES
-(1, 'Juan Pérez', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 34, 'Masculino', '2024-01-01', '555-1234', 'juan.perez@paciente.com', 'Calle del Sol, 123, Sevilla, España'),
-(2, 'María Gómez', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 29, 'Femenino', '2024-01-03', '555-5678', 'maria.gomez@paciente.com', 'Avenida de los Naranjos, 45, Sevilla, España\n'),
-(3, 'Carlos López', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 40, 'Masculino', '2024-01-05', '555-9876', 'carlos.lopez@paciente.com', 'Plaza de la Luna, 9, Sevilla, España'),
-(4, 'Ana Martínez', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 22, 'Femenino', '2024-01-10', '555-6543', 'ana.martinez@paciente.com', 'Calle del Río Guadalquivir, 77, Sevilla, España');
+(1, 'Juan Pérez', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 34, 'Masculino', '2024-01-01', '5551234', 'juan.perez@paciente.com', 'Calle del Sol, 123, Sevilla, España'),
+(2, 'María Gómez', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 29, 'Femenino', '2024-01-03', '5555678', 'maria.gomez@paciente.com', 'Avenida de los Naranjos, 45, Sevilla, España\n'),
+(3, 'Carlos López', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 40, 'Masculino', '2024-01-05', '5559876', 'carlos.lopez@paciente.com', 'Plaza de la Luna, 9, Sevilla, España'),
+(4, 'Ana Martínez', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 22, 'Femenino', '2024-01-10', '5556543', 'ana.martinez@paciente.com', 'Calle del Río Guadalquivir, 77, Sevilla, España');
 
 --
 -- Indexes for dumped tables
