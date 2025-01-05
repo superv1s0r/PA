@@ -95,14 +95,19 @@ section.gestion-container {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 80%;
-    max-width: 400px;
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    overflow-x: auto;
 }
 
 table, th, td {
@@ -148,4 +153,20 @@ button {
 
 button:hover {
     background-color: #45a049;
+}
+
+@media screen and (max-width: 768px) {
+    section.gestion-container {
+        width: 95%;
+    }
+
+    table, th, td {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    table, th, td {
+        font-size: 12px;
+    }
 }

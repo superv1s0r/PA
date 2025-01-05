@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (password_verify($contrasenya, $usuario_db['password'])) {
             $_SESSION['valid'] = true;
             $_SESSION['username'] = $usuario;
-            Helper::redirect('menu.php');
+            Helper::redirect('pacientes.php');
         } else {
             $errores[] = "Contraseña incorrecta.";
         }

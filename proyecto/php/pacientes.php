@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'seguridad.php';
+include 'utilidad.php';
 
 $conn = Helper::getConn();
 $query = "SELECT * FROM pacientes";
