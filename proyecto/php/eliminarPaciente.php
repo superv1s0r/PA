@@ -71,6 +71,8 @@ if (isset($_GET['id'])) {
             <p class="error"><?php echo htmlspecialchars($error); ?></p>
         <?php } ?>
     </section>
+
+    
 </body>
 
 </html>

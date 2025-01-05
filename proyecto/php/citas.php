@@ -65,13 +65,24 @@ if (!$result) {
                         <td><?php echo htmlspecialchars($row['estado']); ?></td>
                         <td>
                             <a href="editarCita.php?id=<?php echo urlencode($row['id']); ?>">Editar</a>
-                            <a href="eliminarCita.php?id=<?php echo urlencode($row['id']); ?>">Eliminar</a>
+                            <a class="delete-link" href="eliminarCita.php?id=<?php echo urlencode($row['id']); ?>">Eliminar</a>
                         </td>
                     </tr>
                 <?php } ?>
             </tbody>
         </table>
     </section>
+
+    <script>
+    document.querySelectorAll('.delete-link').forEach(link => {
+        link.addEventListener('click', function(event) {
+            const confirmation = confirm("¿Estás seguro de que deseas eliminar esta cita?");
+            if (!confirmation) {
+                event.preventDefault();  // Previene la acción del enlace si el usuario cancela
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

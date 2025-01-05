@@ -62,13 +62,24 @@ if (!$result) {
                         <td><?php echo htmlspecialchars($row['direccion']); ?></td>
                         <td>
                             <a href="editarPaciente.php?id=<?php echo urlencode($row['id']); ?>">Editar</a>
-                            <a href="eliminarPaciente.php?id=<?php echo urlencode($row['id']); ?>">Eliminar</a>
+                            <a class="delete-link" href="eliminarPaciente.php?id=<?php echo urlencode($row['id']); ?>">Eliminar</a>
                         </td>
                     </tr>
                 <?php } ?>
             </tbody>
         </table>
     </section>
+
+    <script>
+    document.querySelectorAll('.delete-link').forEach(link => {
+        link.addEventListener('click', function(event) {
+            const confirmation = confirm("¿Estás seguro de que deseas eliminar este paciente?");
+            if (!confirmation) {
+                event.preventDefault();  // Previene la acción del enlace si el usuario cancela
+            }
+        });
+    });
+</script>
 </body>
 
 </html>
