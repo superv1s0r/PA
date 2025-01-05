@@ -138,6 +138,30 @@ section.menu-container {
     background-color: #45a049;
 }
 
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#password {
+    width: 100%;
+    padding-right: 30px; /* Hacer espacio para el ícono */
+    box-sizing: border-box;
+}
+
+#toggle-password {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #888;
+    font-size: 18px;
+}
+
+input[type="password"] {
+    padding-right: 30px;
+}
 
 table {
     width: 100%;

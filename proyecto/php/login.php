@@ -63,17 +63,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/show-password.js"></script>
     <header>
         <h1>Gestión de salud</h1>
     </header>
-    
+
     <section class="login-container">
 
         <p><b>Inicio de sesión</b></p>
         <br>
         <form action="login.php" method="post">
             <input type="email" id="email" name="email" placeholder="Email">
-            <input type="password" id="password" name="password" placeholder="Contraseña">
+            <div class="password-container">
+                <input type="password" id="password" name="password" placeholder="Contraseña">
+                <i id="toggle-password" class="fa fa-eye"></i>
+            </div>
+
             <input type="submit" value="Acceder">
             <br>
             <a href="signup.php" style="text-decoration: underline;">Registrar una cuenta</a>

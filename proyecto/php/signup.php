@@ -54,6 +54,8 @@ try {
 </head>
 
 <body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/show-password.js"></script>
     <header>
         <h1>Gestión de salud</h1>
     </header>
@@ -80,7 +82,10 @@ try {
 
             <textarea id="direccion" name="direccion" placeholder="Dirección" required></textarea>
 
-            <input type="password" id="password" name="password" placeholder="Contraseña" required>
+            <div class="password-container">
+                <input type="password" id="password" name="password" placeholder="Contraseña">
+                <i id="toggle-password" class="fa fa-eye"></i>
+            </div>
 
             <button type="submit">REGISTRAR</button>
 
