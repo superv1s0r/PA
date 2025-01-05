@@ -28,6 +28,7 @@ if (!$result) {
 <body>
     <header>
         <nav>
+            <a href="menu.php">Volver al Menú</a>
             <a href="logout.php">Cerrar sesión</a>
         </nav>
     </header>
