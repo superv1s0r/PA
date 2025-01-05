@@ -45,5 +45,23 @@ class PacienteCrud extends Crud {
         $this->validateData($data);
         return parent::update($data, $conditions);
     }
+    public function getById($id) {
+        $query = "SELECT * FROM pacientes WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta: " . $this->conn->error);
+        }
+
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        } else {
+            throw new Exception("Paciente no encontrado.");
+        }
+    }
+
 }
 ?>
