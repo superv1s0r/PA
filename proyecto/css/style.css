@@ -18,11 +18,11 @@ h1, h2 {
 }
 
 section.login-container {
-    margin: 100px auto;
+    margin: 3rem auto;
     background-color: #fff;
     border-radius: 25px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
-    width: 300px;
+    width: 350px;
     padding: 20px;
     text-align: center;
 }
@@ -45,7 +45,11 @@ section.login-container form {
 }
 
 section.login-container input[type="email"],
-section.login-container input[type="password"] {
+section.login-container input[type="password"],
+section.login-container input[type="text"],
+section.login-container input[type="number"],
+section.login-container textarea,
+section.login-container select {
     padding: 10px;
     border-radius: 10px;
     border: none;

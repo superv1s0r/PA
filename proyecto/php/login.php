@@ -57,29 +57,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <head>
     <meta charset="UTF-8">
-    <title>Sistema de notas</title>
+    <title>Inicio de sesión</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
     <header>
-        <h1>Iniciar sesión</h1>
+        <h1>Gestión de salud</h1>
     </header>
+    
     <section class="login-container">
-        <article class="icons-account">
-            <a href="#" class="icons"><i class="fa-brands fa-google-plus-g"></i></a>
-            <a href="#" class="icons"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" class="icons"><i class="fa-brands fa-github"></i></a>
-            <a href="#" class="icons"><i class="fa-brands fa-apple"></i></a>
-        </article>
 
-        <p> O usa una cuenta ya existente</p>
+        <p><b>Inicio de sesión</b></p>
+        <br>
         <form action="login.php" method="post">
             <input type="email" id="email" name="email" placeholder="Email">
             <input type="password" id="password" name="password" placeholder="Contraseña">
             <input type="submit" value="Acceder">
-            <a href="signup.php">Registrar una cuenta</a>
+            <br>
+            <a href="signup.php" style="text-decoration: underline;">Registrar una cuenta</a>
+            <br>
         </form>
     </section>
 </body>
