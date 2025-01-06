@@ -59,6 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !$error) {
             ], ['id' => $id]);
 
             $mensaje = "Paciente actualizado con éxito.";
+
+
         } catch (Exception $e) {
             $error = "Error al actualizar el paciente: " . $e->getMessage();
         }

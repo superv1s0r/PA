@@ -33,6 +33,7 @@ try {
 
             $pacienteCrud->create($pacienteData);
 
+
             Helper::redirect('login.php');
         } else {
             throw new Exception("Por favor, complete todos los campos correctamente.");

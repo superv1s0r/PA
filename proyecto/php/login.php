@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Fallo al conectar a MySQL: " . mysqli_connect_error());
     }
 
-    $query = "SELECT * FROM pacientes WHERE email = ?";
+    $query = "SELECT * FROM perfil WHERE email = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $usuario);
     $stmt->execute();
@@ -32,6 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (password_verify($contrasenya, $usuario_db['password'])) {
             $_SESSION['logged_in'] = true;
             $_SESSION['username'] = $usuario;
+            $_SESSION['perfil'] = $usuario_db['rol'];
+
             Helper::redirect('menu.php');
         } else {
             $errores[] = "Contraseña incorrecta.";
@@ -59,7 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <title>Inicio de sesión</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>

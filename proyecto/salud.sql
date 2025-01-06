@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jan 04, 2025 at 06:03 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 06-01-2025 a las 13:10:36
+-- Versión del servidor: 8.0.15
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,95 +18,120 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `salud`
+-- Base de datos: `salud`
 --
-CREATE DATABASE IF NOT EXISTS `salud` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `salud`;
 
 -- --------------------------------------------------------
-
+CREATE DATABASE IF NOT EXISTS `salud` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `salud`;
 --
--- Table structure for table `Citas`
+-- Estructura de tabla para la tabla `citas`
 --
 
-CREATE TABLE `Citas` (
+CREATE TABLE `citas` (
   `id` int(11) NOT NULL,
   `id_paciente` int(11) DEFAULT NULL,
   `fecha_cita` datetime DEFAULT NULL,
-  `motivo` varchar(255) DEFAULT NULL,
-  `estado` enum('Programada','Cancelada','Completada') DEFAULT 'Programada'
+  `motivo` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `estado` enum('Programada','Cancelada','Completada') COLLATE utf8mb4_general_ci DEFAULT 'Programada'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Pacientes`
+-- Estructura de tabla para la tabla `pacientes`
 --
 
-CREATE TABLE `Pacientes` (
+CREATE TABLE `pacientes` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `nombre` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `edad` int(11) NOT NULL,
-  `genero` enum('Masculino','Femenino') NOT NULL,
+  `genero` enum('Masculino','Femenino') COLLATE utf8mb4_general_ci NOT NULL,
   `fecha_registro` date NOT NULL,
-  `telefono` varchar(15) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `direccion` text NOT NULL
+  `telefono` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `direccion` text COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Pacientes`
+-- Volcado de datos para la tabla `pacientes`
 --
 
-INSERT INTO `Pacientes` (`id`, `nombre`, `password`, `edad`, `genero`, `fecha_registro`, `telefono`, `email`, `direccion`) VALUES
-(1, 'Juan Pérez', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 34, 'Masculino', '2024-01-01', '5551234', 'juan.perez@paciente.com', 'Calle del Sol, 123, Sevilla, España'),
-(2, 'María Gómez', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 29, 'Femenino', '2024-01-03', '5555678', 'maria.gomez@paciente.com', 'Avenida de los Naranjos, 45, Sevilla, España\n'),
-(3, 'Carlos López', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 40, 'Masculino', '2024-01-05', '5559876', 'carlos.lopez@paciente.com', 'Plaza de la Luna, 9, Sevilla, España'),
-(4, 'Ana Martínez', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq', 22, 'Femenino', '2024-01-10', '5556543', 'ana.martinez@paciente.com', 'Calle del Río Guadalquivir, 77, Sevilla, España');
+INSERT INTO `pacientes` (`id`, `nombre`, `edad`, `genero`, `fecha_registro`, `telefono`, `email`, `direccion`) VALUES
+(1, 'Juan Pérez', 34, 'Masculino', '2024-01-01', '5551234', 'juan.perez@paciente.com', 'Calle del Sol, 123, Sevilla, España'),
+(2, 'María Gómez', 29, 'Femenino', '2024-01-03', '5555678', 'maria.gomez@paciente.com', 'Avenida de los Naranjos, 45, Sevilla, España\n'),
+(3, 'Carlos López', 40, 'Masculino', '2024-01-05', '5559876', 'carlos.lopez@paciente.com', 'Plaza de la Luna, 9, Sevilla, España'),
+(4, 'Ana Martínez', 22, 'Femenino', '2024-01-10', '5556543', 'ana.martinez@paciente.com', 'Calle del Río Guadalquivir, 77, Sevilla, España');
+
+-- --------------------------------------------------------
 
 --
--- Indexes for dumped tables
+-- Estructura de tabla para la tabla `perfil`
+--
+
+CREATE TABLE `perfil` (
+  `id` int(11) NOT NULL,
+  `rol` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `perfil`
+--
+
+INSERT INTO `perfil` (`id`, `rol`, `email`, `password`) VALUES
+(1, 'paciente', 'juan.perez@paciente.com', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq'),
+(2, 'admin', 'maria.gomez@paciente.com', '$2y$10$ZjoiXtkHbds2yOZryXFNie7Q2dybjjbUr6gyfNQmNC1Ob8icufLkq');
+
+--
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `Citas`
+-- Indices de la tabla `citas`
 --
-ALTER TABLE `Citas`
+ALTER TABLE `citas`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_paciente` (`id_paciente`);
 
 --
--- Indexes for table `Pacientes`
+-- Indices de la tabla `pacientes`
 --
-ALTER TABLE `Pacientes`
+ALTER TABLE `pacientes`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indices de la tabla `perfil`
+--
+ALTER TABLE `perfil`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `Citas`
+-- AUTO_INCREMENT de la tabla `citas`
 --
-ALTER TABLE `Citas`
+ALTER TABLE `citas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `Pacientes`
+-- AUTO_INCREMENT de la tabla `pacientes`
 --
-ALTER TABLE `Pacientes`
+ALTER TABLE `pacientes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `Citas`
+-- Filtros para la tabla `citas`
 --
-ALTER TABLE `Citas`
-  ADD CONSTRAINT `Citas_ibfk_1` FOREIGN KEY (`id_paciente`) REFERENCES `Pacientes` (`id`) ON DELETE CASCADE;
+ALTER TABLE `citas`
+  ADD CONSTRAINT `Citas_ibfk_1` FOREIGN KEY (`id_paciente`) REFERENCES `pacientes` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
