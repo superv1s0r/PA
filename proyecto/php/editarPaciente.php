@@ -22,7 +22,7 @@ if (isset($_GET['id'])) {
 
     if ($id) {
         // Obtener el paciente desde la base de datos
-        $paciente = $pacienteCrud->getById(['id' => $id]);
+        $paciente = $pacienteCrud->getById($id);
 
         // Verificar si el paciente existe
         if (!$paciente) {
