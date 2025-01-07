@@ -110,7 +110,8 @@ ALTER TABLE `perfil`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
-
+ALTER TABLE `perfil`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `citas`
 --

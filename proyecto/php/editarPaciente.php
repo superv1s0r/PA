@@ -3,28 +3,23 @@ require_once '../crud/crudPacientes.php';
 require_once 'seguridad.php';
 require_once 'utilidad.php';
 
-// Verificar si el usuario ha iniciado sesión
 if (!Security::isLogged()) {
     Helper::redirect('login.php');
 }
 
-// Conexión a la base de datos
 $conn = Helper::getConn();
 $pacienteCrud = new PacienteCrud($conn);
 
-// Inicializar variables para errores y mensajes
 $error = "";
 $mensaje = "";
 
-// Verificar si se ha proporcionado un ID de paciente en la URL
 if (isset($_GET['id'])) {
     $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
     if ($id) {
-        // Obtener el paciente desde la base de datos
+
         $paciente = $pacienteCrud->getById($id);
 
-        // Verificar si el paciente existe
         if (!$paciente) {
             $error = "No se encontró el paciente con el ID proporcionado.";
         }
@@ -35,7 +30,6 @@ if (isset($_GET['id'])) {
     $error = "No se proporcionó el ID de paciente.";
 }
 
-// Procesar el formulario de edición
 if ($_SERVER["REQUEST_METHOD"] === "POST" && !$error) {
     $nombre = filter_input(INPUT_POST, 'nombre', FILTER_SANITIZE_STRING);
     $edad = filter_input(INPUT_POST, 'edad', FILTER_VALIDATE_INT);
@@ -44,10 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !$error) {
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $direccion = filter_input(INPUT_POST, 'direccion', FILTER_SANITIZE_STRING);
 
-    // Validar los campos
     if ($nombre && $edad && $genero && $telefono && $email && $direccion) {
         try {
-            // Actualizar el paciente
             $pacienteCrud->update([
                 'id' => $id,
                 'nombre' => $nombre,

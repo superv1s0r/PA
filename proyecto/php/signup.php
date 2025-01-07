@@ -5,6 +5,8 @@ require_once 'utilidad.php';
 
 $conn = Helper::getConn();
 
+$nombre = $edad = $genero = $telefono = $email = $direccion = "";
+
 try {
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $nombre = filter_input(INPUT_POST, 'nombre', FILTER_SANITIZE_STRING);
@@ -28,11 +30,12 @@ try {
                 'telefono' => $telefono,
                 'email' => $email,
                 'direccion' => $direccion,
-                'password' => $hashedPassword,
             ];
 
             $pacienteCrud->create($pacienteData);
 
+            $rol = 'paciente';
+            $registrar = Helper::signUp($conn, $rol, $email, $hashedPassword);
 
             Helper::redirect('login.php');
         } else {
@@ -66,22 +69,21 @@ try {
         <p><b>Registro de usuario</b></p>
         <br>
         <form action="signup.php" method="post">
-            <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
-            
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre" value="<?php echo htmlspecialchars($nombre); ?>" required>
 
-            <input type="number" id="edad" name="edad" placeholder="Edad" required>
+            <input type="number" id="edad" name="edad" placeholder="Edad" value="<?php echo htmlspecialchars($edad); ?>" required>
 
             <select id="genero" name="genero" required>
-                <option disabled>Género</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Femenino">Femenino</option>
+                <option disabled <?php echo empty($genero) ? 'selected' : ''; ?>>Género</option>
+                <option value="Masculino" <?php echo $genero === "Masculino" ? 'selected' : ''; ?>>Masculino</option>
+                <option value="Femenino" <?php echo $genero === "Femenino" ? 'selected' : ''; ?>>Femenino</option>
             </select>
 
-            <input type="text" id="telefono" name="telefono" placeholder="Teléfono" required>
+            <input type="text" id="telefono" name="telefono" placeholder="Teléfono" value="<?php echo htmlspecialchars($telefono); ?>" required>
 
-            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="email" id="email" name="email" placeholder="Email" value="<?php echo htmlspecialchars($email); ?>" required>
 
-            <textarea id="direccion" name="direccion" placeholder="Dirección" required></textarea>
+            <textarea id="direccion" name="direccion" placeholder="Dirección" required><?php echo htmlspecialchars($direccion); ?></textarea>
 
             <div class="password-container">
                 <input type="password" id="password" name="password" placeholder="Contraseña">
